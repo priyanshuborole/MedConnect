@@ -1,7 +1,8 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id(Plugins.application)
+    id(Plugins.jetbrainsAndroid)
+    id(Plugins.googleService)
 }
 
 android {
@@ -12,7 +13,7 @@ android {
         minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+        //consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -41,4 +42,9 @@ dependencies {
     implementation(AndroidxDependencies.fragmentKtx)
     implementation(AndroidxDependencies.navigationFragmentKtx)
     implementation(AndroidxDependencies.navigationUIKtx)
+
+    //firebase
+    implementation(platform(FirebaseDependencies.firebaseBom))
+    implementation(FirebaseDependencies.firebaseAuth)
+    implementation(FirebaseDependencies.firestore)
 }

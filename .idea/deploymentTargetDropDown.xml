@@ -5,6 +5,15 @@
       <entry key="app">
         <State />
       </entry>
+      <entry key="features.doctor">
+        <State />
+      </entry>
+      <entry key="features.login">
+        <State />
+      </entry>
+      <entry key="features.patient">
+        <State />
+      </entry>
     </value>
   </component>
 </project>

@@ -10,10 +10,11 @@ object Versions {
     const val room_version = "2.5.2"
     const val coroutines_version = "1.7.1"
     const val navigation_version = "2.3.0"
-
+    const val googleService = "4.3.15"
     const val kotlinCompilerExtensionVersion = "1.4.5"
-
     const val fragment_ktx_version = "1.6.1"
+
+    const val firebaseBom = "32.3.1"
 
     object Lifecycle {
         const val runtime_version = "2.3.1"
@@ -29,6 +30,8 @@ object Classpath {
         "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt_version}"
 
     const val toolsR8 = "com.android.tools:r8:8.2.24"
+
+    const val googleService = "com.google.gms:google-services:${Versions.googleService}"
 }
 
 object Plugins {
@@ -41,6 +44,7 @@ object Plugins {
     const val navigationSafeArgs = "androidx.navigation.safeargs"
     const val kotlinParcelize = "kotlin-parcelize"
     const val hiltAndroid = "dagger.hilt.android.plugin"
+    const val googleService = "com.google.gms.google-services"
 }
 
 object AndroidxDependencies {
@@ -93,6 +97,12 @@ object SquareUpDependencies {
     const val moshi = "com.squareup.moshi:moshi:${Versions.moshi_version}"
     const val moshiKotlinCodegen =
         "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi_version}"
+}
+
+object FirebaseDependencies{
+    const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
+    const val firebaseAuth = "com.google.firebase:firebase-auth-ktx"
+    const val firestore = "com.google.firebase:firebase-firestore-ktx"
 }
 
 object TestDependencies {
