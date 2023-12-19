@@ -2,7 +2,7 @@
 plugins {
     id(Plugins.application)
     id(Plugins.jetbrainsAndroid)
-    id(Plugins.googleService)
+    //id(Plugins.googleService)
 }
 
 android {

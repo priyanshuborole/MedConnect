@@ -12,7 +12,20 @@
           "package_name": "com.priyanshudev.medconnect"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "730093073061-qgas1uihh863dkgt48f090d05b8io6fs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.priyanshudev.medconnect",
+            "certificate_hash": "8f6b048bd2ec8b0e19135a9feea5a92c3f8b7f3f"
+          }
+        },
+        {
+          "client_id": "730093073061-9fdud9kirvakj9fqjhgdblvqoo15mtv6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBaxo9GGRsFhVQOqlrjNkpjARHvUxKoxZs"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "730093073061-9fdud9kirvakj9fqjhgdblvqoo15mtv6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

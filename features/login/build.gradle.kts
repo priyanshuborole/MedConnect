@@ -1,8 +1,9 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    id(Plugins.application)
+    id(Plugins.library)
     id(Plugins.jetbrainsAndroid)
-    id(Plugins.googleService)
+    id(Plugins.kotlinKapt)
+    id(Plugins.hiltAndroid)
+    id(Plugins.kotlinParcelize)
 }
 
 android {
@@ -25,12 +26,15 @@ android {
             )
         }
     }
+    buildFeatures{
+        viewBinding = true
+    }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
@@ -43,8 +47,15 @@ dependencies {
     implementation(AndroidxDependencies.navigationFragmentKtx)
     implementation(AndroidxDependencies.navigationUIKtx)
 
-    //firebase
-    implementation(platform(FirebaseDependencies.firebaseBom))
-    implementation(FirebaseDependencies.firebaseAuth)
-    implementation(FirebaseDependencies.firestore)
+//    //firebase
+//    implementation(platform(FirebaseDependencies.firebaseBom))
+//    implementation(FirebaseDependencies.firebaseAuth)
+//    implementation(FirebaseDependencies.firestore)
+    //for Hilt
+    implementation(HiltDependencies.hiltAndroid)
+    kapt(HiltDependencies.hiltAndroidCompiler)
+
+    implementation(project(Modules.common))
+    implementation(project(Modules.doctor))
+    implementation(libs.play.services.auth)
 }

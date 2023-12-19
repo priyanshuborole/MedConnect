@@ -1,7 +1,12 @@
+@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    id(Plugins.application)
+    id(Plugins.library)
     id(Plugins.jetbrainsAndroid)
-    id(Plugins.googleService)
+    //id("org.jetbrains.kotlin.android")
+    //id(Plugins.googleService)
+    id(Plugins.kotlinKapt)
+    id(Plugins.hiltAndroid)
+    id(Plugins.kotlinParcelize)
 }
 
 android {
@@ -25,11 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
@@ -45,4 +50,10 @@ dependencies {
     testImplementation(TestDependencies.jUnit)
     androidTestImplementation(TestDependencies.androidxJUnit)
     androidTestImplementation(TestDependencies.espresso)
+
+    //for Hilt
+    implementation(HiltDependencies.hiltAndroid)
+    kapt(HiltDependencies.hiltAndroidCompiler)
+
+    implementation(project(Modules.common))
 }
