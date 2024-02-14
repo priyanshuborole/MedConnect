@@ -6,4 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".PatientActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="More Fonts..."
+        android:text="East or WEST" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIBHUTI is the BEST"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

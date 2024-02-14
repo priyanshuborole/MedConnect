@@ -29,14 +29,14 @@ class MainActivity : AppCompatActivity() {
             val isSignedIn = medConnectDataStore.getBoolean("SignedIn", false)
 
             withContext(Dispatchers.Main){
-                if (isSignedIn){
+//                if (isSignedIn){
                     val intent = Intent(this@MainActivity,DoctorActivity::class.java)
                     startActivity(intent)
-                }
-                else{
-                    val intent = Intent(this@MainActivity,LoginActivity::class.java)
-                    startActivity(intent)
-                }
+//                }
+//                else{
+//                    val intent = Intent(this@MainActivity,LoginActivity::class.java)
+//                    startActivity(intent)
+//                }
             }
 
         }
