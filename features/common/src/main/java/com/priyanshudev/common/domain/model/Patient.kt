@@ -2,6 +2,7 @@ package com.priyanshudev.common.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.util.Date
 
 @Parcelize
 data class Patient(

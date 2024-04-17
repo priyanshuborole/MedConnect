@@ -51,7 +51,6 @@ class DoctorLoginFragment : Fragment() {
                 handleResult(task)
             }
         }
-
         return binding.root
     }
 

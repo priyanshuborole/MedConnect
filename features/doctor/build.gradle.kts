@@ -7,6 +7,7 @@ plugins {
     id(Plugins.kotlinKapt)
     id(Plugins.hiltAndroid)
     id(Plugins.kotlinParcelize)
+    id(Plugins.navigationSafeArgs)
 }
 
 android {
@@ -35,6 +36,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 

@@ -39,9 +39,11 @@ class DoctorProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initListener()
+    }
 
+    fun initListener(){
         binding.btnSave.setOnClickListener {
-
             if (
                 binding.tiName.editText?.text.isNullOrBlank() ||
                 binding.tiNumber.editText?.text.isNullOrBlank() ||
@@ -66,7 +68,6 @@ class DoctorProfileFragment : Fragment() {
                     binding.tiGender.editText?.text.toString()
                 )
                 viewModel.saveDoctorProfileData(doctor)
-
                 lifecycleScope.launch(Dispatchers.IO) {
                     medConnectDataStore.putBoolean("SignedIn", true)
                 }

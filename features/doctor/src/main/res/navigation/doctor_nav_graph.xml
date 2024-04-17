@@ -3,16 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/doctor_nav_graph.xml"
-    app:startDestination="@id/doctorHomeFragment">
+    app:startDestination="@id/doctorDashboardFragment">
 
     <fragment
-        android:id="@+id/doctorHomeFragment"
-        android:name="com.priyanshudev.doctor.presentation.DoctorHomeFragment"
-        android:label="fragment_doctor_home"
-        tools:layout="@layout/fragment_doctor_home" />
+        android:id="@+id/doctorDashboardFragment"
+        android:name="com.priyanshudev.doctor.presentation.home.DoctorDashboardFragment"
+        android:label="fragment_doctor_dashboard"
+        tools:layout="@layout/fragment_doctor_dashboard" >
+        <action
+            android:id="@+id/action_doctorDashboardFragment_to_patientProfileFragment"
+            app:destination="@id/patientProfileFragment" />
+        <action
+            android:id="@+id/action_doctorDashboardFragment_to_patientDetailsFragment"
+            app:destination="@id/patientDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/doctorAppointmentFragment"
         android:name="com.priyanshudev.doctor.presentation.DoctorAppointmentFragment"
         android:label="fragment_doctor_appointment"
         tools:layout="@layout/fragment_doctor_appointment" />
+    <fragment
+        android:id="@+id/patientProfileFragment"
+        android:name="com.priyanshudev.doctor.presentation.PatientProfileFragment"
+        android:label="fragment_patient_profile"
+        tools:layout="@layout/fragment_patient_profile" />
+    <fragment
+        android:id="@+id/patientDetailsFragment"
+        android:name="com.priyanshudev.doctor.presentation.patientDetails.PatientDetailsFragment"
+        android:label="fragment_patient_details"
+        tools:layout="@layout/fragment_patient_details" >
+        <action
+            android:id="@+id/action_patientDetailsFragment_to_addPrescriptionFragment"
+            app:destination="@id/addPrescriptionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPrescriptionFragment"
+        android:name="com.priyanshudev.doctor.presentation.prescription.AddPrescriptionFragment"
+        android:label="fragment_add_prescription"
+        tools:layout="@layout/fragment_add_prescription" />
+    <fragment
+        android:id="@+id/prescriptionFragment"
+        android:name="com.priyanshudev.doctor.presentation.prescription.PrescriptionFragment"
+        android:label="PrescriptionFragment" />
 </navigation>
