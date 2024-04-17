@@ -40,9 +40,11 @@ class DoctorProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initListener()
+    }
 
+    fun initListener(){
         binding.btnSave.setOnClickListener {
-
             if (
                 binding.tiName.editText?.text.isNullOrBlank() ||
                 binding.tiNumber.editText?.text.isNullOrBlank() ||
@@ -63,14 +65,13 @@ class DoctorProfileFragment : Fragment() {
                     binding.tiAddress.editText?.text.toString(),
                     binding.tiLicense.editText?.text.toString(),
                     binding.tiSpecialization.editText?.text.toString(),
-                    binding.tiDegree.editText?.text.toString()
+                    binding.tiDegree.editText?.text.toString(),
+                    "male"
                 )
                 viewModel.saveDoctorProfileData(doctor)
-
                 lifecycleScope.launch(Dispatchers.IO) {
                     medConnectDataStore.putBoolean("SignedIn", true)
                 }
-
 //                val intent = Intent(requireActivity(), Class.forName("com.priyanshudev.doctor.DoctorActivity"))
                 val intent = Intent(requireActivity(), DoctorActivity::class.java)
                 startActivity(intent)

@@ -5,31 +5,43 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.PatientDetailsFragment">
+    tools:context=".presentation.patientDetails.PatientDetailsFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbPatientProfile"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:elevation="8dp"
+        android:outlineProvider="background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:layout_marginStart="16dp"/>
+        <TextView
+            android:id="@+id/tvPatientProfileHead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/patient_profile"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"/>
+    </androidx.appcompat.widget.Toolbar>
 
     <View
         android:id="@+id/viewHeader"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="240dp"
         android:background="@drawable/bg_header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/tvPatientProfileHead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/patient_profile"
-        android:fontFamily="@font/poppins"
-        android:textColor="@color/gray"
-        android:textSize="20sp"
-        android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/ic_back"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
+        app:layout_constraintTop_toBottomOf="@id/tbPatientProfile"/>
     <View
         android:id="@+id/viewProfile"
         android:layout_width="80dp"
@@ -39,7 +51,7 @@
         android:background="@drawable/bg_profile"
         android:backgroundTint="@color/app_blue"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvPatientProfileHead"  />
+        app:layout_constraintTop_toBottomOf="@id/tbPatientProfile"  />
 
     <ImageView
         android:id="@+id/ivProfile"
@@ -65,7 +77,7 @@
         android:textSize="24sp"
         android:layout_marginTop="24dp"
         android:layout_marginStart="20dp"
-        app:layout_constraintTop_toBottomOf="@id/tvPatientProfileHead"
+        app:layout_constraintTop_toBottomOf="@id/tbPatientProfile"
         app:layout_constraintStart_toEndOf="@id/viewProfile"/>
 
     <TextView
@@ -74,7 +86,7 @@
         android:layout_height="wrap_content"
         android:text="+918483919735"
         android:fontFamily="@font/poppins_medium"
-        android:textColor="@color/gray"
+        android:textColor="@color/text_default"
         android:textSize="14sp"
         android:layout_marginTop="4dp"
         app:layout_constraintTop_toBottomOf="@id/tvPatientName"
@@ -86,7 +98,7 @@
         android:layout_height="wrap_content"
         android:text="21 Yrs old"
         android:fontFamily="@font/poppins_medium"
-        android:textColor="@color/gray"
+        android:textColor="@color/text_default"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/tvPatientContact"
         app:layout_constraintStart_toStartOf="@id/tvPatientName"/>
@@ -97,7 +109,7 @@
         android:layout_height="wrap_content"
         android:text="Blood group: o+"
         android:fontFamily="@font/poppins_medium"
-        android:textColor="@color/gray"
+        android:textColor="@color/text_default"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/tvPatientAge"
         app:layout_constraintStart_toStartOf="@id/tvPatientName"/>
@@ -108,7 +120,7 @@
         android:layout_height="wrap_content"
         android:text="Address: Pune"
         android:fontFamily="@font/poppins_medium"
-        android:textColor="@color/gray"
+        android:textColor="@color/text_default"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/tvPatientBloodGrp"
         app:layout_constraintStart_toStartOf="@id/tvPatientName"/>
@@ -120,14 +132,14 @@
         android:text="Patient History"
         android:fontFamily="@font/poppins"
         android:textSize="16sp"
-        android:textColor="@color/gray"
+        android:textColor="@color/text_default"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/viewHeader"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPrvHistory"
+        android:id="@+id/rvPatientHistory"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:backgroundTint="@color/white"
@@ -149,7 +161,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvPrvHistory">
+        app:layout_constraintTop_toBottomOf="@id/rvPatientHistory">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAddPrescription"
@@ -165,7 +177,7 @@
         android:gravity="center_vertical"
         android:paddingHorizontal="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvPrvHistory"
+        app:layout_constraintTop_toBottomOf="@id/rvPatientHistory"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
@@ -184,7 +196,7 @@
             android:paddingHorizontal="16dp"
             android:layout_margin="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvPrvHistory"
+            app:layout_constraintTop_toBottomOf="@id/rvPatientHistory"
             app:layout_constraintBottom_toBottomOf="parent"
             />
 

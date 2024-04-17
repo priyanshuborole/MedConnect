@@ -36,8 +36,6 @@ class DoctorActivity : AppCompatActivity() {
                 }
 
                 binding.bAddPatient.setOnClickListener {
-                    Log.d("VIBHUTI", "bPatient")
-
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.doctorFragmentContainer, DoctorAppointmentFragment())
                         .commit()

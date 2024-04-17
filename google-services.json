@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "730093073061",
+    "project_id": "medconnect-181c7",
+    "storage_bucket": "medconnect-181c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730093073061:android:c8a359cd90790d57ce534c",
+        "android_client_info": {
+          "package_name": "com.priyanshudev.medconnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "730093073061-2ro2t6h7clcd6aa73o9vted5du2l1d3s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.priyanshudev.medconnect",
+            "certificate_hash": "f22bf664aa6f52051a0d6fdb0a2680710e2ef270"
+          }
+        },
+        {
+          "client_id": "730093073061-qgas1uihh863dkgt48f090d05b8io6fs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.priyanshudev.medconnect",
+            "certificate_hash": "8f6b048bd2ec8b0e19135a9feea5a92c3f8b7f3f"
+          }
+        },
+        {
+          "client_id": "730093073061-9fdud9kirvakj9fqjhgdblvqoo15mtv6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaxo9GGRsFhVQOqlrjNkpjARHvUxKoxZs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "730093073061-9fdud9kirvakj9fqjhgdblvqoo15mtv6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

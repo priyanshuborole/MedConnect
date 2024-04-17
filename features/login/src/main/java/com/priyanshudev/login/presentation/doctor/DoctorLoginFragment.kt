@@ -51,7 +51,6 @@ class DoctorLoginFragment : Fragment() {
                 handleResult(task)
             }
         }
-
         return binding.root
     }
 
@@ -74,19 +73,6 @@ class DoctorLoginFragment : Fragment() {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         signInLauncher.launch(signInIntent)
     }
-
-//    private fun signInGoogle() {
-//        val signInIntent: Intent = mGoogleSignInClient.signInIntent
-//        startActivityForResult(signInIntent, REQ_CODE)
-//    }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == REQ_CODE) {
-//            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-//            handleResult(task)
-//        }
-//    }
 
     private fun handleResult(completedTask: Task<GoogleSignInAccount>) {
         try {

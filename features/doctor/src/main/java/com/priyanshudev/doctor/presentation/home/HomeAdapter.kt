@@ -4,7 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.priyanshudev.common.domain.model.patient.Patient
+import com.priyanshudev.common.domain.model.Patient
 import com.priyanshudev.doctor.databinding.ItemPatientsHomeBinding
 
 class HomeAdapter(private var patientList: List<Patient>,

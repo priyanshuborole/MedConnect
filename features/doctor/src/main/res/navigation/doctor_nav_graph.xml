@@ -29,7 +29,7 @@
         tools:layout="@layout/fragment_patient_profile" />
     <fragment
         android:id="@+id/patientDetailsFragment"
-        android:name="com.priyanshudev.doctor.presentation.PatientDetailsFragment"
+        android:name="com.priyanshudev.doctor.presentation.patientDetails.PatientDetailsFragment"
         android:label="fragment_patient_details"
         tools:layout="@layout/fragment_patient_details" >
         <action
@@ -38,7 +38,11 @@
     </fragment>
     <fragment
         android:id="@+id/addPrescriptionFragment"
-        android:name="com.priyanshudev.doctor.presentation.AddPrescriptionFragment"
+        android:name="com.priyanshudev.doctor.presentation.prescription.AddPrescriptionFragment"
         android:label="fragment_add_prescription"
         tools:layout="@layout/fragment_add_prescription" />
+    <fragment
+        android:id="@+id/prescriptionFragment"
+        android:name="com.priyanshudev.doctor.presentation.prescription.PrescriptionFragment"
+        android:label="PrescriptionFragment" />
 </navigation>
