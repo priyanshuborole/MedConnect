@@ -10,7 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DoctorAppointmentFragment : Fragment() {
+class  DoctorAppointmentFragment : Fragment() {
 
 
     override fun onCreateView(

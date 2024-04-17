@@ -12,12 +12,12 @@ plugins {
 
 android {
     namespace = "com.priyanshudev.medconnect"
-    compileSdk = 33
+    compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {
         applicationId = "com.priyanshudev.medconnect"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = ConfigurationData.targetSdk
         versionCode = 1
         versionName = "1.0"
 
@@ -60,9 +60,12 @@ dependencies {
     implementation(HiltDependencies.hiltAndroid)
     kapt(HiltDependencies.hiltAndroidCompiler)
 
+    // compose
+
     implementation(project(Modules.login))
     implementation(project(Modules.common))
     implementation(project(Modules.doctor))
+    implementation(project(Modules.patient))
 
 
 }

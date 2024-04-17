@@ -1,13 +1,17 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    id(Plugins.application)
+    id(Plugins.library)
     id(Plugins.jetbrainsAndroid)
+    //id("org.jetbrains.kotlin.android")
     //id(Plugins.googleService)
+    id(Plugins.kotlinKapt)
+    id(Plugins.hiltAndroid)
+    id(Plugins.kotlinParcelize)
 }
 
 android {
     namespace = "com.priyanshudev.patient"
-    compileSdk = 33
+    compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {
         minSdk = 26
@@ -25,12 +29,21 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.8"
+    }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
@@ -49,4 +62,22 @@ dependencies {
     testImplementation(TestDependencies.jUnit)
     androidTestImplementation(TestDependencies.androidxJUnit)
     androidTestImplementation(TestDependencies.espresso)
+
+
+    //for Hilt
+    implementation(HiltDependencies.hiltAndroid)
+    kapt(HiltDependencies.hiltAndroidCompiler)
+
+    // for compose
+    implementation(AndroidxDependencies.Compose.activity)
+    implementation(platform(AndroidxDependencies.Compose.bom))
+    implementation(AndroidxDependencies.Compose.ui)
+    implementation(AndroidxDependencies.Compose.graphics)
+    implementation(AndroidxDependencies.Compose.material)
+    implementation(AndroidxDependencies.Compose.toolingPreview)
+    implementation(AndroidxDependencies.Compose.navigation)
+    implementation(AndroidxDependencies.Compose.viewModel)
+    implementation(AndroidxDependencies.Compose.hiltNavigation)
+
+    implementation(project(Modules.common))
 }

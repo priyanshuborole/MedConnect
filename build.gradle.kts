@@ -16,7 +16,7 @@ buildscript {
         classpath(Classpath.hiltAndroidGradle)
         // r8 version
         classpath(Classpath.toolsR8)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.21")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22")
         classpath(Classpath.googleService)
 
         // NOTE: Do not place your application dependencies here; they belong

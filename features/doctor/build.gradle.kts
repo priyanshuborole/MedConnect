@@ -11,7 +11,7 @@ plugins {
 
 android {
     namespace = "com.priyanshudev.doctor"
-    compileSdk = 33
+    compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {
         minSdk = 26

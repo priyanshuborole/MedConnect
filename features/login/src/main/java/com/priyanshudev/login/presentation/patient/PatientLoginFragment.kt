@@ -1,4 +1,4 @@
-package com.priyanshudev.login.presentation.doctor
+package com.priyanshudev.login.presentation.patient
 
 import android.app.Activity
 import android.content.Intent
@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -15,19 +19,15 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.priyanshudev.login.R
-import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.navigation.fragment.findNavController
 import com.priyanshudev.common.domain.repository.MedConnectDataStore
+import com.priyanshudev.login.R
 import com.priyanshudev.login.databinding.FragmentDoctorLoginBinding
+import com.priyanshudev.login.databinding.FragmentPatientLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
-class DoctorLoginFragment : Fragment() {
+class PatientLoginFragment : Fragment() {
 
     @Inject
     lateinit var medConnectDataStore: MedConnectDataStore
@@ -38,12 +38,12 @@ class DoctorLoginFragment : Fragment() {
     private lateinit var signInLauncher: ActivityResultLauncher<Intent>
     lateinit var mGoogleSignInClient: GoogleSignInClient
 
-    private lateinit var binding: FragmentDoctorLoginBinding
+    private lateinit var binding: FragmentPatientLoginBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View{
-        binding = FragmentDoctorLoginBinding.inflate(layoutInflater,container,false)
+    ): View? {
+        binding = FragmentPatientLoginBinding.inflate(layoutInflater,container,false)
         signInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
@@ -51,7 +51,6 @@ class DoctorLoginFragment : Fragment() {
                 handleResult(task)
             }
         }
-
         return binding.root
     }
 
@@ -91,7 +90,7 @@ class DoctorLoginFragment : Fragment() {
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Toast.makeText(requireContext(), "Successfully", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_doctorLoginFragment_to_doctorProfileFragment)
+                findNavController().navigate(R.id.action_patientLoginFragment_to_patientProfileFragment)
             }
         }
     }

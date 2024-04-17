@@ -9,6 +9,7 @@ import com.google.firebase.ktx.initialize
 import com.priyanshudev.common.domain.repository.MedConnectDataStore
 import com.priyanshudev.doctor.DoctorActivity
 import com.priyanshudev.login.LoginActivity
+import com.priyanshudev.patient.PatientActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         Firebase.initialize(this)
 
         lifecycleScope.launch(Dispatchers.IO) {
-            val isSignedIn = medConnectDataStore.getBoolean("SignedIn", false)
+            val isSignedIn = medConnectDataStore.getBoolean("PatientSignedIn", false)
 
             withContext(Dispatchers.Main){
                 if (isSignedIn){
@@ -38,7 +39,6 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
-
         }
     }
 }
