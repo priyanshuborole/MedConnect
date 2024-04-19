@@ -1,18 +1,25 @@
 package com.priyanshudev.common.domain.model
 
-data class Prescription(
-    val doctorName: String,
-    val symptoms: String,
-    val diagnose: String,
-    val medicines: List<Medicines>,
-    val date: String,
-)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
+data class Prescription(
+    val doctorName: String? = null,
+    val symptoms: String? = null,
+    val diagnose: String? = null,
+    val medicines: List<Medicines> = emptyList(),
+    val date: String? = null,
+    val doctorId: String? = null,
+    val patientId: String? = null
+) : Parcelable
+
+@Parcelize
 data class Medicines(
-    val medicineName: String,
-    val duration: Int,
-    val morning: Boolean,
-    val afternoon: Boolean,
-    val night: Boolean,
-    val dosage: String,
-)
+    val medicineName: String? = null,
+    val duration: Int? = null,
+    val morning: Boolean? = null,
+    val afternoon: Boolean? = null,
+    val night: Boolean? = null,
+    val dosage: String? = null,
+) : Parcelable

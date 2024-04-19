@@ -3,9 +3,8 @@ package com.priyanshudev.patient.presentation.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.firestore.FirebaseFirestore
 import com.priyanshudev.common.domain.model.Doctor
-import com.priyanshudev.patient.data.firebase.FirebaseDataSource
+import com.priyanshudev.patient.domain.repository.PatientFirebaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -19,10 +18,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(): ViewModel() {
-
-    private val firebaseFirestore = FirebaseFirestore.getInstance()
-    val firebaseDataSource = FirebaseDataSource(firebaseFirestore)
+class HomeViewModel @Inject constructor(
+    private val patientFirebaseRepository: PatientFirebaseRepository
+): ViewModel() {
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
     private val _doctors = MutableStateFlow(doctorList)
@@ -55,11 +53,11 @@ class HomeViewModel @Inject constructor(): ViewModel() {
     }
 
     fun getDoctorsList() = viewModelScope.launch(Dispatchers.IO) {
-        val doctorsList = firebaseDataSource.getDoctorsList()
+        val doctorsList = patientFirebaseRepository.getDoctorsList()
         Log.d("PRIYANSHU", "getDoctorsList: $doctorsList")
     }
     fun getPatientsForDoctor() = viewModelScope.launch(Dispatchers.IO) {
-        val patients = firebaseDataSource.getPatientsForDoctor()
+        val patients = patientFirebaseRepository.getPatientsForDoctor()
         Log.d("PRIYANSHU", "getPatientsForDoctor: $patients")
     }
 

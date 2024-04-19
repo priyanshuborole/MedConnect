@@ -2,11 +2,10 @@
 plugins {
     id(Plugins.library)
     id(Plugins.jetbrainsAndroid)
-    //id("org.jetbrains.kotlin.android")
-    //id(Plugins.googleService)
     id(Plugins.kotlinKapt)
     id(Plugins.hiltAndroid)
     id(Plugins.kotlinParcelize)
+    id(Plugins.navigationSafeArgs)
 }
 
 android {

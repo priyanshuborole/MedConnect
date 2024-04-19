@@ -26,8 +26,8 @@ class HomeAdapter(private var patientList: List<Patient>,
         val patient = patientList[position]
         holder.binding.apply {
             tvName.text = patient.name
-            tvId.text = "Id: ${patient.id}"
-            tvDate.text = patient.date.toString()
+            tvId.text = "Id: ${patient.patientId}"
+            tvDate.text = patient.number.toString()
             holder.itemView.setOnClickListener {
                 listener.onItemClick(patient)
             }

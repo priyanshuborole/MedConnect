@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,7 +45,8 @@ import com.priyanshudev.patient.theme.headerColor
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onItemClick:(Doctor) -> Unit
 ) {
     val searchText by viewModel.searchText.collectAsState()
     val doctors by viewModel.doctors.collectAsState()
@@ -60,7 +62,7 @@ fun HomeScreen(
             viewModel::onSearchTextChange
         )
         Spacer(modifier = Modifier.height(16.dp))
-        DoctorsList(doctors)
+        DoctorsList(doctors,onItemClick)
     }
 }
 
@@ -89,11 +91,10 @@ fun Header(){
             Text(
                 modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 15.dp),
                 text = "Priyanshu Borole",
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
             )
         }
-
-
     }
 }
 
@@ -147,19 +148,19 @@ fun SearchTextView(
             focusedContainerColor = headerColor,
             unfocusedContainerColor = headerColor
         )
-
     )
 }
 
 @Composable
-fun DoctorsList(doctors: List<Doctor>){
+fun DoctorsList(doctors: List<Doctor>, onItemClick:(Doctor) -> Unit){
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp),
+        contentPadding = PaddingValues(bottom = 48.dp)
     ) {
         items(doctors) { doctor ->
-            DoctorListItem(doctor = doctor)
+            DoctorListItem(doctor = doctor,onItemClick)
             Spacer(modifier = Modifier.height(8.dp))
         }
     }

@@ -9,10 +9,23 @@
         android:id="@+id/patientHomeFragment"
         android:name="com.priyanshudev.patient.presentation.home.PatientHomeFragment"
         android:label="fragment_patient_home"
-        tools:layout="@layout/fragment_patient_home" />
+        tools:layout="@layout/fragment_patient_home" >
+        <action
+            android:id="@+id/action_patientHomeFragment_to_doctorDetailFragment"
+            app:destination="@id/doctorDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/patientAppointmentFragment"
         android:name="com.priyanshudev.patient.presentation.PatientAppointmentFragment"
         android:label="fragment_patient_appointment"
         tools:layout="@layout/fragment_patient_appointment" />
+    <fragment
+        android:id="@+id/doctorDetailFragment"
+        android:name="com.priyanshudev.patient.presentation.home.DoctorDetailFragment"
+        android:label="fragment_doctor_detail"
+        tools:layout="@layout/fragment_doctor_detail" >
+        <argument
+            android:name="doctor"
+            app:argType="com.priyanshudev.common.domain.model.Doctor" />
+    </fragment>
 </navigation>

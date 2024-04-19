@@ -14,7 +14,7 @@ class PatientActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =  ActivityPatientBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_patient)
+        setContentView(binding.root)
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.patientFragmentContainer) as NavHostFragment
 

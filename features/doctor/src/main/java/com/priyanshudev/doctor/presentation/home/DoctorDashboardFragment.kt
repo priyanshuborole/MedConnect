@@ -47,32 +47,32 @@ class DoctorDashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initData()
+//        initData()
         initViews()
     }
-
-    private fun initData(): MutableList<Doctor> {
-        val uid = firebaseAuth.currentUser!!.uid
-        val collectionRef = firestore.collection("doctors").document(uid).collection("patients").document()
-        val patientList = mutableListOf<Doctor>()
-        val snapshot = this.lifecycleScope.launch {
-            collectionRef.get().await()
-        }
-
-        Log.d("PRIYANSHU", "getDoctorsList: snapshots - $snapshot")
-        for (document in snapshot.children) {
-            val doctor = document.toObject(Doctor::class.java)
-            doctor?.let {
-                doctorsList.add(it)
-            }
-            Log.d("Fire6store", document.id + " => " + document.data)
-        }
-        return doctorsList
-    }
+//
+//    private fun initData(): MutableList<Doctor> {
+//        val uid = firebaseAuth.currentUser!!.uid
+//        val collectionRef = firestore.collection("doctors").document(uid).collection("patients").document()
+//        val patientList = mutableListOf<Doctor>()
+//        val snapshot = this.lifecycleScope.launch {
+//            collectionRef.get().await()
+//        }
+//
+//        Log.d("PRIYANSHU", "getDoctorsList: snapshots - $snapshot")
+//        for (document in snapshot.children) {
+//            val doctor = document.toObject(Doctor::class.java)
+//            doctor?.let {
+//                doctorsList.add(it)
+//            }
+//            Log.d("Fire6store", document.id + " => " + document.data)
+//        }
+//        return doctorsList
+//    }
 
     private fun initViews(){
         binding.tvDoctorName.text = "Vibhuti Patil"
-        setUpRecyclerView()
+//        setUpRecyclerView()
     }
 
 //    private fun setUpRecyclerView(){
