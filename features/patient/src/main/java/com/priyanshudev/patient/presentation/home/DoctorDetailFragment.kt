@@ -7,16 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.priyanshudev.patient.R
 import com.priyanshudev.patient.databinding.FragmentDoctorDetailBinding
 import com.priyanshudev.patient.databinding.FragmentPatientHomeBinding
 import com.priyanshudev.patient.presentation.home.components.HomeScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DoctorDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDoctorDetailBinding
+    private val viewModel: HomeViewModel by viewModels()
     private val args: DoctorDetailFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +31,9 @@ class DoctorDetailFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 MaterialTheme {
-                    DoctorDetailScreen(args.doctor){}
+                    DoctorDetailScreen(viewModel,args.doctor){
+
+                    }
                 }
             }
         }

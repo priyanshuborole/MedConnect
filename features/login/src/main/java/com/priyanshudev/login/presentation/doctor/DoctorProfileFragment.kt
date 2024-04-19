@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
 import com.priyanshudev.common.domain.model.Doctor
 import com.priyanshudev.common.domain.repository.MedConnectDataStore
 import com.priyanshudev.doctor.DoctorActivity
@@ -27,6 +28,9 @@ class DoctorProfileFragment : Fragment() {
 
     @Inject
     lateinit var medConnectDataStore: MedConnectDataStore
+
+    @Inject
+    lateinit var firebaseAuth: FirebaseAuth
 
     private val viewModel: ProfileViewModel by viewModels()
     override fun onCreateView(
@@ -56,8 +60,9 @@ class DoctorProfileFragment : Fragment() {
                 Toast.makeText(requireContext(), "Invalid Input", Toast.LENGTH_SHORT).show()
 
             } else {
+                val doctorId = firebaseAuth.currentUser?.uid ?: "nullId"
                 val doctor = Doctor(
-                    "doctorId",
+                    doctorId,
                     binding.tiName.editText?.text.toString(),
                     binding.tiNumber.editText?.text.toString(),
                     binding.tiEmail.editText?.text.toString(),
