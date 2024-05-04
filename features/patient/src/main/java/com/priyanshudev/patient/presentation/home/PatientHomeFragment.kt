@@ -1,6 +1,7 @@
 package com.priyanshudev.patient.presentation.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +34,7 @@ class PatientHomeFragment : Fragment() {
             setContent {
                 MaterialTheme {
                     HomeScreen(viewModel){
+                        Log.d("PRIYANSHU","doctor passed is $it")
                         val action = PatientHomeFragmentDirections.actionPatientHomeFragmentToDoctorDetailFragment(it)
                         findNavController().navigate(action)
                     }

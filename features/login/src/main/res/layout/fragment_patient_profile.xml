@@ -54,6 +54,7 @@
             android:id="@+id/etNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="phone"
             android:maxLines="1"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -81,6 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
+            android:inputType="textEmailAddress"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,7 +147,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:hint="Specialization"
+        android:hint="Blood Group"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"

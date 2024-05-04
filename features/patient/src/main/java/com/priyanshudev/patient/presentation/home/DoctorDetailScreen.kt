@@ -30,6 +30,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.priyanshudev.common.domain.model.Doctor
 import com.priyanshudev.common.domain.model.Medicines
 import com.priyanshudev.common.domain.model.Prescription
@@ -171,7 +172,11 @@ val prescriptionList = listOf(
 )
 
 @Composable
-fun DoctorDetailScreen(doctor: Doctor, onItemClick: (Prescription) -> Unit) {
+fun DoctorDetailScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+    doctor: Doctor,
+    onItemClick: (Prescription) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
