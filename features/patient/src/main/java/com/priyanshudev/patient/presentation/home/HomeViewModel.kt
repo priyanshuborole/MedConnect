@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.priyanshudev.common.domain.model.Doctor
+import com.priyanshudev.common.domain.model.Prescription
 import com.priyanshudev.patient.domain.repository.PatientFirebaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,10 @@ class HomeViewModel @Inject constructor(
 ): ViewModel() {
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
+
+    private val _prescriptions = MutableStateFlow(emptyList<Prescription>())
+    val prescriptions = _prescriptions.asStateFlow()
+
     private val _doctors = MutableStateFlow(emptyList<Doctor>())
     @OptIn(FlowPreview::class)
     val doctors = searchText
@@ -45,7 +50,6 @@ class HomeViewModel @Inject constructor(
 
     init {
         getDoctorsList()
-        getPatientsForDoctor()
     }
 
     fun onSearchTextChange(text: String) {
@@ -60,6 +64,11 @@ class HomeViewModel @Inject constructor(
     fun getPatientsForDoctor() = viewModelScope.launch(Dispatchers.IO) {
         val patients = patientFirebaseRepository.getPatientsForDoctor()
         Log.d("PRIYANSHU", "getPatientsForDoctor: $patients")
+    }
+    fun getPrescriptionForPatient(doctorId: String) = viewModelScope.launch(Dispatchers.IO) {
+        val prescription = patientFirebaseRepository.getPrescriptionForPatient(doctorId)
+        _prescriptions.emit(prescription)
+        Log.d("PRIYANSHU", "getPrescriptionForPatient: $prescription")
     }
 
 }

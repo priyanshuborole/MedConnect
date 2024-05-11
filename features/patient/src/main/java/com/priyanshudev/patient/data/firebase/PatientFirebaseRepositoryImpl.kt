@@ -2,6 +2,7 @@ package com.priyanshudev.patient.data.firebase
 
 import com.priyanshudev.common.domain.model.Doctor
 import com.priyanshudev.common.domain.model.Patient
+import com.priyanshudev.common.domain.model.Prescription
 import com.priyanshudev.patient.domain.repository.PatientFirebaseRepository
 import javax.inject.Inject
 
@@ -14,5 +15,9 @@ class PatientFirebaseRepositoryImpl @Inject constructor(
 
     override suspend fun getDoctorsList(): MutableList<Doctor> {
         return firebaseDataSource.getDoctorsList()
+    }
+
+    override suspend fun getPrescriptionForPatient(doctorId: String): MutableList<Prescription> {
+        return firebaseDataSource.getPrescriptionForPatient(doctorId)
     }
 }

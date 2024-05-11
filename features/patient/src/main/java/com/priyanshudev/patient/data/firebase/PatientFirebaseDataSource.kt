@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.priyanshudev.common.domain.model.Doctor
 import com.priyanshudev.common.domain.model.Patient
+import com.priyanshudev.common.domain.model.Prescription
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -42,5 +43,23 @@ class PatientFirebaseDataSource @Inject constructor(
             Log.d("Fire6store", document.id + " => " + document.data)
         }
         return patients
+    }
+
+    suspend fun getPrescriptionForPatient(doctorId: String): MutableList<Prescription> {
+        val uid = firebaseAuth.currentUser?.uid ?: "nullId"
+        val collectionRef = firestore.collection("patients").document(uid)
+            .collection("prescriptions")
+
+        val prescriptions = mutableListOf<Prescription>()
+        val snapshot = collectionRef.whereEqualTo("doctorId", doctorId).get().await()
+        Log.d("PRIYANSHU", "getPrescriptionForPatient: snapshots - $snapshot")
+        for (document in snapshot!!.documents) {
+            val prescription = document.toObject(Prescription::class.java)
+            prescription?.let {
+                prescriptions.add(it)
+            }
+            Log.d("Fire6store", document.id + " => " + document.data)
+        }
+        return prescriptions
     }
 }
