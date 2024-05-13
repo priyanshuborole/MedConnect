@@ -1,4 +1,4 @@
-package com.priyanshudev.patient.presentation.home
+package com.priyanshudev.patient.presentation.main.details
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -38,141 +38,9 @@ import com.priyanshudev.common.domain.model.Doctor
 import com.priyanshudev.common.domain.model.Medicines
 import com.priyanshudev.common.domain.model.Prescription
 import com.priyanshudev.patient.R
+import com.priyanshudev.patient.presentation.main.viewmodel.HomeViewModel
 import com.priyanshudev.patient.theme.headerColor
 import com.priyanshudev.patient.theme.strokeColor
-
-val prescriptionList = listOf(
-    Prescription(
-        doctorName = "Dr. Smith",
-        symptoms = "Headache",
-        diagnose = "Migraine",
-        medicines = listOf(
-            Medicines(
-                medicineName = "Paracetamol",
-                duration = 5,
-                morning = true,
-                afternoon = false,
-                night = true,
-                dosage = "500mg"
-            ),
-            Medicines(
-                medicineName = "Ibuprofen",
-                duration = 3,
-                morning = true,
-                afternoon = true,
-                night = false,
-                dosage = "200mg"
-            )
-        ),
-        date = "2024-04-18",
-        doctorId = "D123",
-        patientId = "P456"
-    ),
-    Prescription(
-        doctorName = "Dr. Johnson",
-        symptoms = "Fever",
-        diagnose = "Flu",
-        medicines = listOf(
-            Medicines(
-                medicineName = "Aspirin",
-                duration = 7,
-                morning = true,
-                afternoon = true,
-                night = true,
-                dosage = "300mg"
-            ),
-            Medicines(
-                medicineName = "Antibiotics",
-                duration = 10,
-                morning = true,
-                afternoon = true,
-                night = true,
-                dosage = "Varies"
-            )
-        ),
-        date = "2024-04-19",
-        doctorId = "D124",
-        patientId = "P457"
-    ),
-    Prescription(
-        doctorName = "Dr. Martinez",
-        symptoms = "Sore throat",
-        diagnose = "Tonsillitis",
-        medicines = listOf(
-            Medicines(
-                medicineName = "Antiseptic spray",
-                duration = 7,
-                morning = true,
-                afternoon = true,
-                night = true,
-                dosage = "As needed"
-            ),
-            Medicines(
-                medicineName = "Cough syrup",
-                duration = 5,
-                morning = false,
-                afternoon = false,
-                night = true,
-                dosage = "10ml"
-            )
-        ),
-        date = "2024-04-20",
-        doctorId = "D125",
-        patientId = "P458"
-    ),
-    Prescription(
-        doctorName = "Dr. Brown",
-        symptoms = "Stomach pain",
-        diagnose = "Gastritis",
-        medicines = listOf(
-            Medicines(
-                medicineName = "Antacid",
-                duration = 7,
-                morning = true,
-                afternoon = true,
-                night = true,
-                dosage = "As needed"
-            ),
-            Medicines(
-                medicineName = "Digestive enzyme",
-                duration = 10,
-                morning = true,
-                afternoon = true,
-                night = true,
-                dosage = "Varies"
-            )
-        ),
-        date = "2024-04-21",
-        doctorId = "D126",
-        patientId = "P459"
-    ),
-    Prescription(
-        doctorName = "Dr. Lee",
-        symptoms = "Allergy",
-        diagnose = "Seasonal allergies",
-        medicines = listOf(
-            Medicines(
-                medicineName = "Antihistamine",
-                duration = 14,
-                morning = true,
-                afternoon = false,
-                night = true,
-                dosage = "10mg"
-            ),
-            Medicines(
-                medicineName = "Nasal spray",
-                duration = 7,
-                morning = false,
-                afternoon = false,
-                night = true,
-                dosage = "As needed"
-            )
-        ),
-        date = "2024-04-22",
-        doctorId = "D127",
-        patientId = "P460"
-    )
-)
 
 @Composable
 fun DoctorDetailScreen(
@@ -312,7 +180,7 @@ fun PrescriptionListItem(prescription: Prescription, onItemClick: (Prescription)
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = prescription.medicines.toString(),
+                text = prescription.date.toString(),
                 style = MaterialTheme.typography.bodyMedium
             )
         }

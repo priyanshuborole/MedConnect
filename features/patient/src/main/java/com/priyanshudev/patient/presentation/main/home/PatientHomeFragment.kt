@@ -1,4 +1,4 @@
-package com.priyanshudev.patient.presentation.home
+package com.priyanshudev.patient.presentation.main.home
 
 import android.os.Bundle
 import android.util.Log
@@ -7,14 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.priyanshudev.patient.R
 import com.priyanshudev.patient.databinding.FragmentPatientHomeBinding
-import com.priyanshudev.patient.presentation.home.components.DoctorListItem
-import com.priyanshudev.patient.presentation.home.components.HomeScreen
+import com.priyanshudev.patient.presentation.main.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 

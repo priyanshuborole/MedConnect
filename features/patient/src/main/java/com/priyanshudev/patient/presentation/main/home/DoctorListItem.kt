@@ -1,4 +1,4 @@
-package com.priyanshudev.patient.presentation.home.components
+package com.priyanshudev.patient.presentation.main.home
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke

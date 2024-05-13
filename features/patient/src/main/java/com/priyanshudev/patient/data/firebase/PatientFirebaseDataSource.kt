@@ -47,7 +47,7 @@ class PatientFirebaseDataSource @Inject constructor(
 
     suspend fun getPrescriptionForPatient(doctorId: String): MutableList<Prescription> {
         val uid = firebaseAuth.currentUser?.uid ?: "nullId"
-        val collectionRef = firestore.collection("patients").document(uid)
+        val collectionRef = firestore.collection("patients").document("MGdjwxHrlRTfI4dfQ3fVsgrMcWA3")
             .collection("prescriptions")
 
         val prescriptions = mutableListOf<Prescription>()

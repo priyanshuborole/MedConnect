@@ -27,20 +27,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Firebase.initialize(this)
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            val isSignedIn = medConnectDataStore.getBoolean("SignedIn", false)
-            val isPatientSignedIn = medConnectDataStore.getBoolean("PatientSignedIn", false)
-
-            withContext(Dispatchers.Main){
-                if (isSignedIn){
-                    val intent = Intent(this@MainActivity,DoctorActivity::class.java)
-                    startActivity(intent)
-                }
-                else{
-                    val intent = Intent(this@MainActivity,LoginActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-        }
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            val isSignedIn = medConnectDataStore.getBoolean("SignedIn", false)
+//            val isPatientSignedIn = medConnectDataStore.getBoolean("PatientSignedIn", false)
+//
+//            withContext(Dispatchers.Main){
+//                if (isSignedIn){
+//                    val intent = Intent(this@MainActivity,DoctorActivity::class.java)
+//                    startActivity(intent)
+//                }
+//                else{
+//                    val intent = Intent(this@MainActivity,LoginActivity::class.java)
+//                    startActivity(intent)
+//                }
+//            }
+//        }
+        val intent = Intent(this@MainActivity,PatientActivity::class.java)
+        startActivity(intent)
     }
 }

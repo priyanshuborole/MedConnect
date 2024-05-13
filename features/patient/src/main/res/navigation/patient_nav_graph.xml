@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/patientHomeFragment"
-        android:name="com.priyanshudev.patient.presentation.home.PatientHomeFragment"
+        android:name="com.priyanshudev.patient.presentation.main.home.PatientHomeFragment"
         android:label="fragment_patient_home"
         tools:layout="@layout/fragment_patient_home" >
         <action
@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_patient_appointment" />
     <fragment
         android:id="@+id/doctorDetailFragment"
-        android:name="com.priyanshudev.patient.presentation.home.DoctorDetailFragment"
+        android:name="com.priyanshudev.patient.presentation.main.details.DoctorDetailFragment"
         android:label="fragment_doctor_detail"
         tools:layout="@layout/fragment_doctor_detail" >
         <argument

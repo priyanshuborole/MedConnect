@@ -1,4 +1,4 @@
-package com.priyanshudev.patient.presentation.home
+package com.priyanshudev.patient.presentation.main.details
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,12 +8,9 @@ import android.view.ViewGroup
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import com.priyanshudev.patient.R
 import com.priyanshudev.patient.databinding.FragmentDoctorDetailBinding
-import com.priyanshudev.patient.databinding.FragmentPatientHomeBinding
-import com.priyanshudev.patient.presentation.home.components.HomeScreen
+import com.priyanshudev.patient.presentation.main.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
