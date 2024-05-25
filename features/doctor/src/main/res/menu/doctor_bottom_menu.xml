@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/patientHomeFragment"
-        android:title="Home"
+        android:id="@+id/doctorDashboardFragment"
+        android:title="Dashboard"
         android:icon="@drawable/ic_home"
         android:iconTint="@color/white"
         />
     <item
-        android:id="@+id/patientAppointmentFragment"
-        android:title="Appointment"
+        android:id="@+id/doctorAppointmentFragment"
+        android:title="Add Patient"
+        android:icon="@drawable/ic_add"
         />
 </menu>

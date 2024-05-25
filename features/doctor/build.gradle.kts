@@ -30,6 +30,9 @@ android {
             )
         }
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.8"
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -39,6 +42,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 }
 
@@ -54,6 +58,17 @@ dependencies {
     testImplementation(TestDependencies.jUnit)
     androidTestImplementation(TestDependencies.androidxJUnit)
     androidTestImplementation(TestDependencies.espresso)
+
+    //compose
+    implementation(AndroidxDependencies.Compose.activity)
+    implementation(platform(AndroidxDependencies.Compose.bom))
+    implementation(AndroidxDependencies.Compose.ui)
+    implementation(AndroidxDependencies.Compose.graphics)
+    implementation(AndroidxDependencies.Compose.material)
+    implementation(AndroidxDependencies.Compose.toolingPreview)
+    implementation(AndroidxDependencies.Compose.navigation)
+    implementation(AndroidxDependencies.Compose.viewModel)
+    implementation(AndroidxDependencies.Compose.hiltNavigation)
 
     //for Hilt
     implementation(HiltDependencies.hiltAndroid)

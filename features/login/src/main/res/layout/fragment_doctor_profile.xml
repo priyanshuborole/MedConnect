@@ -204,7 +204,7 @@
             app:boxStrokeWidth="2dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tiSpecialization">
+            app:layout_constraintTop_toBottomOf="@id/tiDegree">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etGender"

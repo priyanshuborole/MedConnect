@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.priyanshudev.common.domain.model.Appointment
 import com.priyanshudev.common.domain.model.Doctor
-import com.priyanshudev.common.domain.model.Medicines
 import com.priyanshudev.common.domain.model.Prescription
 import com.priyanshudev.patient.R
 import com.priyanshudev.patient.presentation.appointment.component.DateTimePickerDialog
