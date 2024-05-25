@@ -124,4 +124,35 @@ class PatientFirebaseDataSource @Inject constructor(
             .await()
         return appointments.toObjects(Appointment::class.java)
     }
+
+    suspend fun cancelAppointment(appointmentId: String): Boolean {
+        try {
+            val document = firestore.collection("appointments")
+                .whereEqualTo("id",appointmentId)
+                .get().await()
+            firestore.collection("appointments")
+                .document(document.documents[0].id)
+                .delete()
+                .await()
+            return true
+        } catch (e: Exception) {
+            return false
+        }
+    }
+
+    suspend fun rescheduleAppointment(appointmentId: String, startDateTime: Long): Boolean {
+        try {
+            val document = firestore.collection("appointments")
+                .whereEqualTo("id",appointmentId)
+                .get().await()
+            firestore.collection("appointments")
+                .document(document.documents[0].id)
+                .update("startDateTime",startDateTime)
+                .await()
+
+            return true
+        } catch (e: Exception) {
+            return false
+        }
+    }
 }

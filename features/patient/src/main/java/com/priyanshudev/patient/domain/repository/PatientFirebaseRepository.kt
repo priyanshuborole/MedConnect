@@ -15,4 +15,8 @@ interface PatientFirebaseRepository {
     suspend fun bookAppointment(doctorId: String, startDateTime:Long): Boolean
 
     suspend fun getAppointments(): MutableList<Appointment>
+
+    suspend fun cancelAppointment(appointmentId: String): Boolean
+
+    suspend fun rescheduleAppointment(appointmentId: String, startDateTime: Long): Boolean
 }

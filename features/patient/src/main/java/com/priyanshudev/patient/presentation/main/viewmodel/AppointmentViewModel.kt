@@ -29,10 +29,26 @@ class AppointmentViewModel@Inject constructor(
         Log.d("PRIYANSHU", "bookAppointment: $isBooked")
     }
 
-    fun getAppointments() = viewModelScope.launch(Dispatchers.IO) {
+    private fun getAppointments() = viewModelScope.launch(Dispatchers.IO) {
         val appointments = patientFirebaseRepository.getAppointments()
         _appointments.emit(appointments)
         Log.d("PRIYANSHU", "getAppointments: $appointments")
+    }
+
+    fun cancelAppointment(appointmentId: String) = viewModelScope.launch(Dispatchers.IO) {
+        val isCancelled = patientFirebaseRepository.cancelAppointment(appointmentId)
+        if (isCancelled){
+            getAppointments()
+        }
+        Log.d("PRIYANSHU", "cancelAppointment: $isCancelled")
+    }
+
+    fun rescheduleAppointment(appointmentId: String, startDateTime: Long) = viewModelScope.launch(Dispatchers.IO) {
+        val isRescheduled = patientFirebaseRepository.rescheduleAppointment(appointmentId, startDateTime)
+        if (isRescheduled){
+            getAppointments()
+        }
+        Log.d("PRIYANSHU", "rescheduleAppointment: $isRescheduled")
     }
 
 }

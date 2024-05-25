@@ -1,5 +1,6 @@
 package com.priyanshudev.patient.presentation.appointment
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -16,13 +17,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,15 +39,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.priyanshudev.common.domain.model.Appointment
 import com.priyanshudev.patient.R
+import com.priyanshudev.patient.presentation.appointment.component.DateTimePickerDialog
 import com.priyanshudev.patient.presentation.main.viewmodel.AppointmentViewModel
-import com.priyanshudev.patient.presentation.main.viewmodel.HomeViewModel
 import com.priyanshudev.patient.theme.strokeColor
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PatientAppointmentScreen(
     viewModel: AppointmentViewModel = hiltViewModel()
@@ -55,15 +60,14 @@ fun PatientAppointmentScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(4.dp))
-
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(12.dp),
             contentPadding = PaddingValues(bottom = 48.dp)
-        ){
+        ) {
             groupedAppointments.forEach { (header, items) ->
-                stickyHeader {
+                item {
                     Text(
                         text = header,
                         style = MaterialTheme.typography.headlineSmall,
@@ -73,7 +77,12 @@ fun PatientAppointmentScreen(
                     )
                 }
                 items(items) { appointment ->
-                    AppointmentCard(appointment)
+                    if (header == "Active Appointments"){
+                        AppointmentCardActive(viewModel,appointment)
+                    }else{
+                        AppointmentCardPast(appointment)
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
         }
@@ -81,7 +90,8 @@ fun PatientAppointmentScreen(
 }
 
 @Composable
-fun AppointmentCard(appointment: Appointment) {
+fun AppointmentCardActive(viewModel: AppointmentViewModel,appointment: Appointment) {
+    var showDateTimeDialog by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -114,12 +124,105 @@ fun AppointmentCard(appointment: Appointment) {
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Time : ${convertMillisToTime(appointment.startDateTime)} to ${convertMillisToTime(appointment.endDateTime)}",
+                    text = "Time : ${convertMillisToTime(appointment.startDateTime)} to ${
+                        convertMillisToTime(
+                            appointment.endDateTime
+                        )
+                    }",
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = appointment.status,
+                    color = if (appointment.status == "accepted") Color.Green else Color.Red,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedButton(
+                        border = BorderStroke(1.dp, strokeColor),
+                        shape = MaterialTheme.shapes.small,
+                        onClick = {
+                            viewModel.cancelAppointment(appointment.id)
+                        }) {
+                        Text(text = "Cancel")
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(
+                        shape = MaterialTheme.shapes.small,
+                        onClick = {
+                            showDateTimeDialog = true
+                        }) {
+                        Text(text = "Reschedule")
+                    }
+
+                    if (showDateTimeDialog) {
+                        DateTimePickerDialog(
+                            onDismissRequest = { showDateTimeDialog = false },
+                            onSave = { timestamp ->
+                                Log.d("PRIYANSHU", "DoctorProfile: TIMESTAMP $timestamp")
+                                showDateTimeDialog = false
+                                viewModel.rescheduleAppointment(appointment.id, timestamp)
+                            }
+                        )
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+@Composable
+fun AppointmentCardPast(appointment: Appointment) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth(),
+        border = BorderStroke(1.dp, strokeColor),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_doctor_male),
+                contentDescription = "Profile Image",
+                modifier = Modifier.size(60.dp),
+                contentScale = ContentScale.Crop
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Column {
+                Text(
+                    text = appointment.doctorName,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Black
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Date : ${convertMillisToDate(appointment.startDateTime)}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Time : ${convertMillisToTime(appointment.startDateTime)} to ${
+                        convertMillisToTime(
+                            appointment.endDateTime
+                        )
+                    }",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = if (appointment.status == "accepted") "Completed" else "Not Accepted",
                     color = if (appointment.status == "accepted") Color.Green else Color.Red,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold

@@ -29,4 +29,16 @@ class PatientFirebaseRepositoryImpl @Inject constructor(
     override suspend fun getAppointments(): MutableList<Appointment> {
         return firebaseDataSource.getAppointments()
     }
+
+    override suspend fun cancelAppointment(appointmentId: String): Boolean {
+        return firebaseDataSource.cancelAppointment(appointmentId)
+    }
+
+    override suspend fun rescheduleAppointment(
+        appointmentId: String,
+        startDateTime: Long
+    ): Boolean {
+        return firebaseDataSource.rescheduleAppointment(appointmentId, startDateTime)
+    }
+
 }
