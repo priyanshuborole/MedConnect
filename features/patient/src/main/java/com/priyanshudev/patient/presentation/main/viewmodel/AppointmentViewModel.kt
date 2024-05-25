@@ -24,8 +24,8 @@ class AppointmentViewModel@Inject constructor(
         getAppointments()
     }
 
-    fun bookAppointment(doctorId: String, startDateTime:Long) = viewModelScope.launch(Dispatchers.IO){
-        val isBooked = patientFirebaseRepository.bookAppointment(doctorId, startDateTime)
+    fun bookAppointment(doctorId: String, doctorName: String, startDateTime:Long) = viewModelScope.launch(Dispatchers.IO){
+        val isBooked = patientFirebaseRepository.bookAppointment(doctorId, doctorName, startDateTime)
         Log.d("PRIYANSHU", "bookAppointment: $isBooked")
     }
 

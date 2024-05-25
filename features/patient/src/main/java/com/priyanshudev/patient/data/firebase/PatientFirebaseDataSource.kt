@@ -66,12 +66,14 @@ class PatientFirebaseDataSource @Inject constructor(
     }
 
 
-    suspend fun bookAppointment(doctorId: String, startDateTime: Long): Boolean {
+    suspend fun bookAppointment(doctorId: String, doctorName: String, startDateTime: Long): Boolean {
 
         val endDateTime = startDateTime + 3_600_000
         val appointment = Appointment(
             id = "Appointment$startDateTime",
             doctorId = doctorId,
+            doctorName = doctorName,
+            patientName = "",
             patientId = firebaseAuth.currentUser?.uid ?: "nullId",
             startDateTime = startDateTime,
             endDateTime = endDateTime

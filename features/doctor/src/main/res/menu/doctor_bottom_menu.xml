@@ -4,11 +4,10 @@
         android:id="@+id/doctorDashboardFragment"
         android:title="Dashboard"
         android:icon="@drawable/ic_home"
-        android:iconTint="@color/white"
         />
     <item
         android:id="@+id/doctorAppointmentFragment"
-        android:title="Add Patient"
-        android:icon="@drawable/ic_add"
+        android:title="Appointment"
+        android:icon="@drawable/ic_appointment"
         />
 </menu>

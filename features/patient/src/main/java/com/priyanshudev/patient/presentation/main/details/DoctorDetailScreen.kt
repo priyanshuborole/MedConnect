@@ -159,7 +159,11 @@ fun DoctorProfile(appointmentViewModel: AppointmentViewModel,doctor: Doctor, onB
                         onSave = { timestamp ->
                             Log.d("PRIYANSHU", "DoctorProfile: TIMESTAMP $timestamp")
                             showDateTimeDialog = false
-                            appointmentViewModel.bookAppointment(doctor.doctorId, timestamp)
+                            appointmentViewModel.bookAppointment(
+                                doctor.doctorId,
+                                doctor.name,
+                                timestamp
+                            )
                         }
                     )
                 }

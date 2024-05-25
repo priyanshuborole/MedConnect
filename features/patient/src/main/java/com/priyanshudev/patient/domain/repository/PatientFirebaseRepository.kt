@@ -12,7 +12,7 @@ interface PatientFirebaseRepository {
 
     suspend fun getPrescriptionForPatient(doctorId: String): MutableList<Prescription>
 
-    suspend fun bookAppointment(doctorId: String, startDateTime:Long): Boolean
+    suspend fun bookAppointment(doctorId: String, doctorName: String, startDateTime:Long): Boolean
 
     suspend fun getAppointments(): MutableList<Appointment>
 

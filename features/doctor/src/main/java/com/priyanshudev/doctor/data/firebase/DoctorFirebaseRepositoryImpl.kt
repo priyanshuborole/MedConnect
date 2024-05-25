@@ -1,5 +1,6 @@
 package com.priyanshudev.doctor.data.firebase
 
+import com.priyanshudev.common.domain.model.Appointment
 import com.priyanshudev.common.domain.model.Doctor
 import com.priyanshudev.common.domain.model.Patient
 import com.priyanshudev.common.domain.model.Prescription
@@ -19,5 +20,13 @@ class DoctorFirebaseRepositoryImpl  @Inject constructor(
 
     override suspend fun getPrescriptionForDoctor(): MutableList<Prescription> {
         return firebaseDataSource.getPrescriptionForDoctor()
+    }
+
+    override suspend fun getAppointments(): MutableList<Appointment> {
+        return firebaseDataSource.getAppointments()
+    }
+
+    override suspend fun updateAppointmentStatus(appointmentId: String, status: String): Boolean {
+        return firebaseDataSource.updateAppointmentStatus(appointmentId, status)
     }
 }

@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import com.priyanshudev.common.domain.model.Appointment
 import com.priyanshudev.common.domain.model.Doctor
 import com.priyanshudev.common.domain.model.Patient
 import com.priyanshudev.common.domain.model.Prescription
@@ -83,6 +84,29 @@ class DoctorFirebaseDataSource @Inject constructor(
         }
         return prescriptions
     }
+    suspend fun getAppointments() : MutableList<Appointment> {
+        val appointments = firestore.collection("appointments")
+            .whereEqualTo("doctorId","xQxwws9ta6ZcOpVbptxTy0qVldx2")
+            .get()
+            .await()
+        return appointments.toObjects(Appointment::class.java)
+    }
 
+    suspend fun updateAppointmentStatus(appointmentId: String, status: String): Boolean {
+        try {
+            val document = firestore.collection("appointments")
+                .whereEqualTo("id", appointmentId)
+                .get().await()
+
+            firestore.collection("appointments")
+                .document(document.documents[0].id)
+                .update("status", status)
+                .await()
+
+            return true
+        } catch (e: Exception) {
+            return false
+        }
+    }
 
 }

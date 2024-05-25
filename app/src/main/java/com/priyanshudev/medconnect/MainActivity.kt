@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 //                }
 //            }
 //        }
-        val intent = Intent(this@MainActivity,PatientActivity::class.java)
+        val intent = Intent(this@MainActivity,DoctorActivity::class.java)
         startActivity(intent)
     }
 }
