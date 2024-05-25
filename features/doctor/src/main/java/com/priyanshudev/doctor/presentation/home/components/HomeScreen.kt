@@ -1,4 +1,4 @@
-package com.priyanshudev.patient.presentation.home.components
+package com.priyanshudev.doctor.presentation.home.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,17 +37,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.priyanshudev.common.domain.model.Doctor
-import com.priyanshudev.patient.presentation.home.HomeViewModel
-import com.priyanshudev.patient.theme.headerColor
+import com.priyanshudev.common.domain.model.Patient
+import com.priyanshudev.doctor.presentation.home.DoctorViewModel
+import com.priyanshudev.doctor.theme.headerColor
+import com.priyanshudev.doctor.theme.textDefault
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
-    onItemClick:(Doctor) -> Unit
+    viewModel: DoctorViewModel = hiltViewModel(),
+    onItemClick:(Patient) -> Unit
 ) {
     val searchText by viewModel.searchText.collectAsState()
-    val doctors by viewModel.doctors.collectAsState()
+    val doctors by viewModel.patient.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,8 +60,9 @@ fun HomeScreen(
             searchText,
             viewModel::onSearchTextChange
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        DoctorsList(doctors,onItemClick)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = "Your Patients", modifier = Modifier.wrapContentSize().align(Alignment.Start).padding(start = 16.dp), fontSize = 16.sp, color = textDefault)
+        PatientsList(doctors,onItemClick)
     }
 }
 
@@ -87,7 +90,7 @@ fun Header(){
             )
             Text(
                 modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 15.dp),
-                text = "Priyanshu Borole",
+                text = "Vibhuti Patil",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
@@ -149,15 +152,15 @@ fun SearchTextView(
 }
 
 @Composable
-fun DoctorsList(doctors: List<Doctor>, onItemClick:(Doctor) -> Unit){
+fun PatientsList(patients: List<Patient>, onItemClick:(Patient) -> Unit){
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp),
         contentPadding = PaddingValues(bottom = 48.dp)
     ) {
-        items(doctors) { doctor ->
-            DoctorListItem(doctor = doctor,onItemClick)
+        items(patients) { patient ->
+            PatientListItem(patient = patient,onItemClick)
             Spacer(modifier = Modifier.height(8.dp))
         }
     }

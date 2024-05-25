@@ -14,6 +14,16 @@ data class Prescription(
     val patientId: String? = null
 ) : Parcelable
 
+//@Parcelize
+//data class Medicines(
+//    val medicineName: String? = null,
+//    val duration: Int? = null,
+//    val morning: Boolean? = null,
+//    val afternoon: Boolean? = null,
+//    val night: Boolean? = null,
+//    val dosage: String? = null,
+//) : Parcelable
+
 @Parcelize
 data class Medicines(
     val medicineName: String? = null,
@@ -21,5 +31,7 @@ data class Medicines(
     val morning: Boolean? = null,
     val afternoon: Boolean? = null,
     val night: Boolean? = null,
-    val dosage: String? = null,
+    val morningDosage: String? = null,
+    val afternoonDosage: String? = null,
+    val nightDosage: String? = null,
 ) : Parcelable
