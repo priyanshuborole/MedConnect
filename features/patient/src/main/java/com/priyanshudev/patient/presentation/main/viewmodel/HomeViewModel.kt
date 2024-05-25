@@ -3,6 +3,7 @@ package com.priyanshudev.patient.presentation.main.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.priyanshudev.common.domain.model.Appointment
 import com.priyanshudev.common.domain.model.Doctor
 import com.priyanshudev.common.domain.model.Prescription
 import com.priyanshudev.patient.domain.repository.PatientFirebaseRepository
@@ -22,11 +23,13 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val patientFirebaseRepository: PatientFirebaseRepository
 ): ViewModel() {
+
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
 
     private val _prescriptions = MutableStateFlow(emptyList<Prescription>())
     val prescriptions = _prescriptions.asStateFlow()
+
 
     private val _doctors = MutableStateFlow(emptyList<Doctor>())
     @OptIn(FlowPreview::class)
@@ -66,5 +69,4 @@ class HomeViewModel @Inject constructor(
         _prescriptions.emit(prescription)
         Log.d("PRIYANSHU", "getPrescriptionForPatient: $prescription")
     }
-
 }

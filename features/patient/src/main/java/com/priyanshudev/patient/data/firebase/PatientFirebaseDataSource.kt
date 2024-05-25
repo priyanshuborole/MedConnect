@@ -3,6 +3,7 @@ package com.priyanshudev.patient.data.firebase
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.priyanshudev.common.domain.model.Appointment
 import com.priyanshudev.common.domain.model.Doctor
 import com.priyanshudev.common.domain.model.Patient
 import com.priyanshudev.common.domain.model.Prescription
@@ -47,8 +48,9 @@ class PatientFirebaseDataSource @Inject constructor(
 
     suspend fun getPrescriptionForPatient(doctorId: String): MutableList<Prescription> {
         val uid = firebaseAuth.currentUser?.uid ?: "nullId"
-        val collectionRef = firestore.collection("patients").document("MGdjwxHrlRTfI4dfQ3fVsgrMcWA3")
-            .collection("prescriptions")
+        val collectionRef =
+            firestore.collection("patients").document("MGdjwxHrlRTfI4dfQ3fVsgrMcWA3")
+                .collection("prescriptions")
 
         val prescriptions = mutableListOf<Prescription>()
         val snapshot = collectionRef.whereEqualTo("doctorId", doctorId).get().await()
@@ -61,5 +63,65 @@ class PatientFirebaseDataSource @Inject constructor(
             Log.d("Fire6store", document.id + " => " + document.data)
         }
         return prescriptions
+    }
+
+
+    suspend fun bookAppointment(doctorId: String, startDateTime: Long): Boolean {
+
+        val endDateTime = startDateTime + 3_600_000
+        val appointment = Appointment(
+            id = "Appointment$startDateTime",
+            doctorId = doctorId,
+            patientId = firebaseAuth.currentUser?.uid ?: "nullId",
+            startDateTime = startDateTime,
+            endDateTime = endDateTime
+        )
+        addAppointment(appointment)
+        return true
+//        val isAvailable = isTimeSlotAvailable(
+//            doctorId,
+//            startDateTime,
+//            endDateTime
+//        )
+//        if (isAvailable) {
+//            val appointment = Appointment(
+//                id = "Appointment$startDateTime",
+//                doctorId = doctorId,
+//                patientId = firebaseAuth.currentUser?.uid ?: "nullId",
+//                startDateTime = startDateTime,
+//                endDateTime = endDateTime
+//            )
+//            addAppointment(appointment)
+//            return true
+//        } else {
+//            return false
+//        }
+    }
+
+    private suspend fun addAppointment(appointment: Appointment) {
+        firestore.collection("appointments").add(appointment).await()
+    }
+
+    private suspend fun isTimeSlotAvailable(
+        doctorId: String,
+        startTime: Long,
+        endTime: Long
+    ): Boolean {
+        val result = firestore.collection("appointments")
+            .whereEqualTo("doctorId", doctorId)
+            .whereGreaterThan("startTime", startTime)
+            .whereLessThan("endTime", endTime)
+            .get()
+            .await()
+
+        return result.isEmpty
+    }
+
+    suspend fun getAppointments() : MutableList<Appointment> {
+        val appointments = firestore.collection("appointments")
+            .whereEqualTo("patientId","MGdjwxHrlRTfI4dfQ3fVsgrMcWA3")
+            .get()
+            .await()
+        return appointments.toObjects(Appointment::class.java)
     }
 }

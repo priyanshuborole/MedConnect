@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/patientAppointmentFragment"
-        android:name="com.priyanshudev.patient.presentation.PatientAppointmentFragment"
+        android:name="com.priyanshudev.patient.presentation.appointment.PatientAppointmentFragment"
         android:label="fragment_patient_appointment"
         tools:layout="@layout/fragment_patient_appointment" />
     <fragment
@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_doctorDetailFragment_to_prescriptionViewFragment"
             app:destination="@id/prescriptionViewFragment" />
+        <action
+            android:id="@+id/action_doctorDetailFragment_to_appointmentBookingFragment"
+            app:destination="@id/appointmentBookingFragment" />
     </fragment>
     <fragment
         android:id="@+id/prescriptionViewFragment"
@@ -39,5 +42,14 @@
         <argument
             android:name="prescription"
             app:argType="com.priyanshudev.common.domain.model.Prescription" />
+    </fragment>
+    <fragment
+        android:id="@+id/appointmentBookingFragment"
+        android:name="com.priyanshudev.patient.presentation.appointment.AppointmentBookingFragment"
+        android:label="fragment_appointment_booking"
+        tools:layout="@layout/fragment_appointment_booking" >
+        <argument
+            android:name="doctor"
+            app:argType="com.priyanshudev.common.domain.model.Doctor" />
     </fragment>
 </navigation>

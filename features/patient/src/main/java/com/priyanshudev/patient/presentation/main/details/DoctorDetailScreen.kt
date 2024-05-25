@@ -1,5 +1,6 @@
 package com.priyanshudev.patient.presentation.main.details
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -14,9 +15,11 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,18 +29,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.priyanshudev.common.domain.model.Appointment
 import com.priyanshudev.common.domain.model.Doctor
 import com.priyanshudev.common.domain.model.Medicines
 import com.priyanshudev.common.domain.model.Prescription
 import com.priyanshudev.patient.R
+import com.priyanshudev.patient.presentation.appointment.component.DateTimePickerDialog
+import com.priyanshudev.patient.presentation.main.viewmodel.AppointmentViewModel
 import com.priyanshudev.patient.presentation.main.viewmodel.HomeViewModel
 import com.priyanshudev.patient.theme.headerColor
 import com.priyanshudev.patient.theme.strokeColor
@@ -45,8 +56,10 @@ import com.priyanshudev.patient.theme.strokeColor
 @Composable
 fun DoctorDetailScreen(
     viewModel: HomeViewModel = hiltViewModel(),
+    appointmentViewModel: AppointmentViewModel = hiltViewModel(),
     doctor: Doctor,
-    onItemClick: (Prescription) -> Unit
+    onItemClick: (Prescription) -> Unit,
+    onButtonClick: (Doctor) -> Unit
 ) {
     LaunchedEffect(Unit) {
         viewModel.getPrescriptionForPatient(doctor.doctorId)
@@ -58,14 +71,15 @@ fun DoctorDetailScreen(
             .navigationBarsPadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        DoctorProfile(doctor)
+        DoctorProfile(appointmentViewModel,doctor, onButtonClick)
         Spacer(modifier = Modifier.height(16.dp))
         PastHistory(prescriptions = prescriptions, onItemClick)
     }
 }
 
 @Composable
-fun DoctorProfile(doctor: Doctor) {
+fun DoctorProfile(appointmentViewModel: AppointmentViewModel,doctor: Doctor, onButtonClick: (Doctor) -> Unit) {
+    var showDateTimeDialog by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(0, 0, 15, 15),
@@ -124,6 +138,33 @@ fun DoctorProfile(doctor: Doctor) {
                     text = "Phone Number - ${doctor.phoneNumber}",
                     style = MaterialTheme.typography.bodyMedium
                 )
+                Spacer(modifier = Modifier.height(8.dp))
+                Button(
+                    onClick = {
+                        showDateTimeDialog = true
+                    },
+                    Modifier.wrapContentSize(),
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_appointment),
+                        colorFilter = ColorFilter.tint(Color.White),
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Book Appointment", style = MaterialTheme.typography.bodyMedium)
+                }
+
+                if (showDateTimeDialog) {
+                    DateTimePickerDialog(
+                        onDismissRequest = { showDateTimeDialog = false },
+                        onSave = { timestamp ->
+                            Log.d("PRIYANSHU", "DoctorProfile: TIMESTAMP $timestamp")
+                            showDateTimeDialog = false
+                            appointmentViewModel.bookAppointment(doctor.doctorId, timestamp)
+                        }
+                    )
+                }
+
             }
         }
     }
