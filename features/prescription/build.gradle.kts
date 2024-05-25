@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.priyanshudev.prescription"
-    compileSdk = 33
+    compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {
         minSdk = 26

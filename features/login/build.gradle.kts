@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.priyanshudev.login"
-    compileSdk = 33
+    compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {
         minSdk = 26
@@ -46,6 +46,9 @@ dependencies {
     implementation(AndroidxDependencies.fragmentKtx)
     implementation(AndroidxDependencies.navigationFragmentKtx)
     implementation(AndroidxDependencies.navigationUIKtx)
+    testImplementation(TestDependencies.jUnit)
+    androidTestImplementation(TestDependencies.androidxJUnit)
+    androidTestImplementation(TestDependencies.espresso)
 
 //    //firebase
 //    implementation(platform(FirebaseDependencies.firebaseBom))
@@ -57,5 +60,6 @@ dependencies {
 
     implementation(project(Modules.common))
     implementation(project(Modules.doctor))
+    implementation(project(Modules.patient))
     implementation(libs.play.services.auth)
 }

@@ -20,4 +20,18 @@
         android:name="com.priyanshudev.login.presentation.doctor.DoctorProfileFragment"
         android:label="fragment_doctor_profile"
         tools:layout="@layout/fragment_doctor_profile" />
+    <fragment
+        android:id="@+id/patientLoginFragment"
+        android:name="com.priyanshudev.login.presentation.patient.PatientLoginFragment"
+        android:label="fragment_patient_login"
+        tools:layout="@layout/fragment_patient_login" >
+        <action
+            android:id="@+id/action_patientLoginFragment_to_patientProfileFragment"
+            app:destination="@id/patientProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientProfileFragment"
+        android:name="com.priyanshudev.login.presentation.patient.PatientProfileFragment"
+        android:label="fragment_patient_profile"
+        tools:layout="@layout/fragment_patient_profile" />
 </navigation>

@@ -4,11 +4,12 @@ plugins {
     id(Plugins.jetbrainsAndroid)
     id(Plugins.kotlinKapt)
     id(Plugins.hiltAndroid)
+    id(Plugins.kotlinParcelize)
 }
 
 android {
     namespace = "com.priyanshudev.common"
-    compileSdk = 33
+    compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {
         minSdk = 26
@@ -36,6 +37,11 @@ android {
 
 dependencies {
 
+
+    testImplementation(TestDependencies.jUnit)
+    androidTestImplementation(TestDependencies.androidxJUnit)
+    androidTestImplementation(TestDependencies.espresso)
+
     // firebase dependencies
     api(platform(FirebaseDependencies.firebaseBom))
     api(FirebaseDependencies.firebaseAuth)
@@ -44,7 +50,6 @@ dependencies {
     //for Hilt
     implementation(HiltDependencies.hiltAndroid)
     kapt(HiltDependencies.hiltAndroidCompiler)
-
 
     //for datastore
     implementation(AndroidxDependencies.datastorePreferences)

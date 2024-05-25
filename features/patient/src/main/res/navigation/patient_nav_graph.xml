@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/patient_nav_graph.xml"
+    app:startDestination="@id/patientHomeFragment">
+
+    <fragment
+        android:id="@+id/patientHomeFragment"
+        android:name="com.priyanshudev.patient.presentation.main.home.PatientHomeFragment"
+        android:label="fragment_patient_home"
+        tools:layout="@layout/fragment_patient_home" >
+        <action
+            android:id="@+id/action_patientHomeFragment_to_doctorDetailFragment"
+            app:destination="@id/doctorDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientAppointmentFragment"
+        android:name="com.priyanshudev.patient.presentation.appointment.PatientAppointmentFragment"
+        android:label="fragment_patient_appointment"
+        tools:layout="@layout/fragment_patient_appointment" />
+    <fragment
+        android:id="@+id/doctorDetailFragment"
+        android:name="com.priyanshudev.patient.presentation.main.details.DoctorDetailFragment"
+        android:label="fragment_doctor_detail"
+        tools:layout="@layout/fragment_doctor_detail" >
+        <argument
+            android:name="doctor"
+            app:argType="com.priyanshudev.common.domain.model.Doctor" />
+        <action
+            android:id="@+id/action_doctorDetailFragment_to_prescriptionViewFragment"
+            app:destination="@id/prescriptionViewFragment" />
+        <action
+            android:id="@+id/action_doctorDetailFragment_to_appointmentBookingFragment"
+            app:destination="@id/appointmentBookingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/prescriptionViewFragment"
+        android:name="com.priyanshudev.patient.presentation.main.prescription.PrescriptionViewFragment"
+        android:label="fragment_prescription_view"
+        tools:layout="@layout/fragment_prescription_view" >
+        <argument
+            android:name="prescription"
+            app:argType="com.priyanshudev.common.domain.model.Prescription" />
+    </fragment>
+    <fragment
+        android:id="@+id/appointmentBookingFragment"
+        android:name="com.priyanshudev.patient.presentation.appointment.AppointmentBookingFragment"
+        android:label="fragment_appointment_booking"
+        tools:layout="@layout/fragment_appointment_booking" >
+        <argument
+            android:name="doctor"
+            app:argType="com.priyanshudev.common.domain.model.Doctor" />
+    </fragment>
+</navigation>

@@ -13,4 +13,7 @@ data class Doctor(
     val license: String,
     val specialization: String,
     val degree: String,
+    val gender: String,
+    val profileImage: String? = null,
+    val clinicLogo: String? = null
 ) : Parcelable
