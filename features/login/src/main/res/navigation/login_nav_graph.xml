@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_nav_graph"
-    app:startDestination="@id/doctorLoginFragment">
+    app:startDestination="@id/loginFragment">
 
 
     <fragment
@@ -34,4 +34,16 @@
         android:name="com.priyanshudev.login.presentation.patient.PatientProfileFragment"
         android:label="fragment_patient_profile"
         tools:layout="@layout/fragment_patient_profile" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.priyanshudev.login.presentation.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_doctorLoginFragment"
+            app:destination="@id/doctorLoginFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_patientLoginFragment"
+            app:destination="@id/patientLoginFragment" />
+    </fragment>
 </navigation>

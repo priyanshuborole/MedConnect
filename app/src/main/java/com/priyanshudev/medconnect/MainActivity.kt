@@ -1,9 +1,8 @@
 package com.priyanshudev.medconnect
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.initialize
@@ -27,22 +26,32 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Firebase.initialize(this)
 
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            val isSignedIn = medConnectDataStore.getBoolean("SignedIn", false)
-//            val isPatientSignedIn = medConnectDataStore.getBoolean("PatientSignedIn", false)
-//
-//            withContext(Dispatchers.Main){
-//                if (isSignedIn){
-//                    val intent = Intent(this@MainActivity,DoctorActivity::class.java)
-//                    startActivity(intent)
-//                }
-//                else{
-//                    val intent = Intent(this@MainActivity,LoginActivity::class.java)
-//                    startActivity(intent)
-//                }
-//            }
-//        }
-        val intent = Intent(this@MainActivity,PatientActivity::class.java)
-        startActivity(intent)
+        lifecycleScope.launch(Dispatchers.IO) {
+            val isSignedIn = medConnectDataStore.getBoolean("SignedIn", false)
+            val isPatientSignedIn = medConnectDataStore.getBoolean("PatientSignedIn", false)
+
+            withContext(Dispatchers.Main){
+                if (isSignedIn){
+                    val intent = Intent(this@MainActivity,DoctorActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                if(isPatientSignedIn){
+                    val intent = Intent(this@MainActivity, PatientActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                if(!isSignedIn && !isPatientSignedIn){
+                    val intent = Intent(this@MainActivity,LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

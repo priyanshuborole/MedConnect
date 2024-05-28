@@ -4,6 +4,7 @@ plugins {
     id(Plugins.kotlinKapt)
     id(Plugins.hiltAndroid)
     id(Plugins.kotlinParcelize)
+//    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -46,6 +47,9 @@ dependencies {
     implementation(AndroidxDependencies.fragmentKtx)
     implementation(AndroidxDependencies.navigationFragmentKtx)
     implementation(AndroidxDependencies.navigationUIKtx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.constraintlayout)
     testImplementation(TestDependencies.jUnit)
     androidTestImplementation(TestDependencies.androidxJUnit)
     androidTestImplementation(TestDependencies.espresso)
