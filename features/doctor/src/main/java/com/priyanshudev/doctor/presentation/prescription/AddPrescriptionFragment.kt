@@ -7,19 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.navigation.findNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.priyanshudev.doctor.R
+import androidx.navigation.fragment.navArgs
 import com.priyanshudev.doctor.databinding.FragmentAddPrescriptionBinding
-import com.priyanshudev.doctor.databinding.FragmentDoctorDashboardBinding
-import com.priyanshudev.doctor.presentation.patientDetails.PatientDetailsFragmentDirections
-import com.priyanshudev.doctor.presentation.patientDetails.components.PatientDetailsScreen
 import com.priyanshudev.doctor.presentation.prescription.components.AddPrescriptionScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddPrescriptionFragment : Fragment() {
     lateinit var binding: FragmentAddPrescriptionBinding
+    private val args: AddPrescriptionFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,7 +26,7 @@ class AddPrescriptionFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 MaterialTheme {
-                    AddPrescriptionScreen()
+                    AddPrescriptionScreen(args.patient)
                 }
             }
         }

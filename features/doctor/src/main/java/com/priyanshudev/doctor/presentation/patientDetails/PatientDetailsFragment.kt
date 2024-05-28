@@ -35,7 +35,7 @@ class PatientDetailsFragment : Fragment() {
             setContent {
                 MaterialTheme {
                     PatientDetailsScreen(args.patient, viewModel) {
-                        val action = PatientDetailsFragmentDirections.actionPatientDetailsFragmentToAddPrescriptionFragment()
+                        val action = PatientDetailsFragmentDirections.actionPatientDetailsFragmentToAddPrescriptionFragment(args.patient)
                         findNavController().navigate(action)
                     }
                 }

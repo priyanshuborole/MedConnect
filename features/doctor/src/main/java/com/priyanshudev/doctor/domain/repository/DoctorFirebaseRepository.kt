@@ -10,4 +10,5 @@ interface DoctorFirebaseRepository {
     suspend fun getPrescriptionForDoctor(): MutableList<Prescription>
     suspend fun getAppointments(): MutableList<Appointment>
     suspend fun updateAppointmentStatus(appointmentId: String, status: String): Boolean
+    suspend fun addPrescription(prescription: Prescription): Boolean
 }

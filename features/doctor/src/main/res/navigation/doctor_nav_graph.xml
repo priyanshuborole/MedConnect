@@ -35,5 +35,9 @@
         android:id="@+id/addPrescriptionFragment"
         android:name="com.priyanshudev.doctor.presentation.prescription.AddPrescriptionFragment"
         android:label="fragment_add_prescription"
-        tools:layout="@layout/fragment_add_prescription" />
+        tools:layout="@layout/fragment_add_prescription" >
+        <argument
+            android:name="patient"
+            app:argType="com.priyanshudev.common.domain.model.Patient" />
+    </fragment>
 </navigation>

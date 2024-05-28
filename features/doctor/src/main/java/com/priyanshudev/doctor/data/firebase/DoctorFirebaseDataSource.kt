@@ -2,13 +2,10 @@ package com.priyanshudev.doctor.data.firebase
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.priyanshudev.common.domain.model.Appointment
-import com.priyanshudev.common.domain.model.Doctor
 import com.priyanshudev.common.domain.model.Patient
 import com.priyanshudev.common.domain.model.Prescription
-import io.grpc.internal.LogExceptionRunnable
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -50,7 +47,8 @@ class DoctorFirebaseDataSource @Inject constructor(
         if (patientIds.isNotEmpty()) {
             val collectionRefPatient = firestore.collection("patients")
             patientIds.forEach { patientId ->
-                val snapshotPatient = collectionRefPatient.whereEqualTo("patientId", patientId.trim()).get().await()
+                val snapshotPatient =
+                    collectionRefPatient.whereEqualTo("patientId", patientId.trim()).get().await()
                 for (document in snapshotPatient!!.documents) {
                     val patient = document.toObject(Patient::class.java)
                     patient?.let {
@@ -84,9 +82,10 @@ class DoctorFirebaseDataSource @Inject constructor(
         }
         return prescriptions
     }
-    suspend fun getAppointments() : MutableList<Appointment> {
+
+    suspend fun getAppointments(): MutableList<Appointment> {
         val appointments = firestore.collection("appointments")
-            .whereEqualTo("doctorId","xQxwws9ta6ZcOpVbptxTy0qVldx2")
+            .whereEqualTo("doctorId", "xQxwws9ta6ZcOpVbptxTy0qVldx2")
             .get()
             .await()
         return appointments.toObjects(Appointment::class.java)
@@ -103,6 +102,21 @@ class DoctorFirebaseDataSource @Inject constructor(
                 .update("status", status)
                 .await()
 
+            return true
+        } catch (e: Exception) {
+            return false
+        }
+    }
+
+    suspend fun addPrescription(prescription: Prescription): Boolean {
+        try {
+            prescription.patientId?.let {
+                firestore.collection("patients")
+                    .document(it)
+                    .collection("prescriptions")
+                    .add(prescription)
+                    .await()
+            }
             return true
         } catch (e: Exception) {
             return false

@@ -74,5 +74,8 @@ dependencies {
     implementation(HiltDependencies.hiltAndroid)
     kapt(HiltDependencies.hiltAndroidCompiler)
 
+    //itext
+    implementation("com.itextpdf:itext7-core:7.1.8")
+
     implementation(project(Modules.common))
 }

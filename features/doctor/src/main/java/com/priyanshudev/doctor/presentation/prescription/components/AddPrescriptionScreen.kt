@@ -1,7 +1,14 @@
 package com.priyanshudev.doctor.presentation.prescription.components
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import android.os.Environment
 import android.speech.RecognizerIntent
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,8 +36,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -60,6 +65,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -69,20 +75,42 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.itextpdf.kernel.colors.DeviceCmyk
+import com.itextpdf.kernel.geom.PageSize
+import com.itextpdf.kernel.pdf.PdfWriter
+import com.itextpdf.layout.Document
+import com.itextpdf.layout.element.Div
+import com.itextpdf.layout.element.Paragraph
+import com.itextpdf.layout.element.Table
+import com.itextpdf.layout.font.FontProvider
+import com.itextpdf.layout.font.FontSet
+import com.itextpdf.layout.property.Property
+import com.itextpdf.layout.property.TextAlignment
+import com.itextpdf.layout.property.UnitValue
 import com.priyanshudev.common.domain.model.Medicines
+import com.priyanshudev.common.domain.model.Patient
+import com.priyanshudev.common.domain.model.Prescription
 import com.priyanshudev.doctor.R
+import com.priyanshudev.doctor.presentation.prescription.PrescriptionViewModel
 import com.priyanshudev.doctor.theme.appBlue
 import com.priyanshudev.doctor.theme.headerColor
 import com.priyanshudev.doctor.theme.strokeColor
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @Composable
-fun AddPrescriptionScreen() {
+fun AddPrescriptionScreen(patient: Patient) {
     var symptomsText by remember { mutableStateOf("") }
     var observationText by remember { mutableStateOf("") }
     var diagnosisText by remember { mutableStateOf("") }
+    val medicines = remember { mutableStateListOf<Medicines>() }
 
     val symptomsSpeechRecognizerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -141,8 +169,8 @@ fun AddPrescriptionScreen() {
             { diagnosisText = it },
             { speechToText("Diagnosis", diagnosisSpeechRecognizerLauncher) }
         )
-        AddMedicine()
-        CreatePrescriptionButton()
+        AddMedicine(medicines)
+        CreatePrescriptionButton(symptomsText, observationText, diagnosisText, medicines, patient)
     }
 }
 
@@ -243,8 +271,7 @@ fun DateText() {
 }
 
 @Composable
-fun AddMedicine() {
-    val medicines = remember { mutableStateListOf<Medicines>() }
+fun AddMedicine(medicines:  MutableList<Medicines>) {
     val showDialog = remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp)) {
@@ -348,7 +375,9 @@ fun AddMedicineDialog(
                     ExposedDropdownMenuBox(
                         expanded = expanded,
                         onExpandedChange = { expanded = !expanded },
-                        modifier = Modifier.padding(top = 10.dp).width(140.dp)
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .width(140.dp)
                     ) {
                         TextField(
                             modifier = Modifier.menuAnchor(),
@@ -361,7 +390,8 @@ fun AddMedicineDialog(
                         )
                         ExposedDropdownMenu(
                             expanded = expanded,
-                            onDismissRequest = { expanded = false }, modifier = Modifier.height(250.dp)
+                            onDismissRequest = { expanded = false },
+                            modifier = Modifier.height(250.dp)
                         ) {
                             options.forEach { selectionOption ->
                                 DropdownMenuItem(
@@ -535,7 +565,71 @@ fun TimeDosageFields(
 }
 
 @Composable
-fun CreatePrescriptionButton() {
+fun CreatePrescriptionButton(
+    symptomsText: String,
+    observationText: String,
+    diagnosisText: String,
+    medicines: List<Medicines>,
+    patient: Patient,
+    viewModel: PrescriptionViewModel = hiltViewModel()
+) {
+    val context = LocalContext.current
+    var isReadPermissionGranted by remember { mutableStateOf(false) }
+    var isWritePermissionGranted by remember { mutableStateOf(false) }
+    var isManagePermissionGranted by remember { mutableStateOf(false) }
+
+    val permissionResultLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { result ->
+        isReadPermissionGranted = result[Manifest.permission.READ_EXTERNAL_STORAGE] ?: false
+        isWritePermissionGranted = result[Manifest.permission.WRITE_EXTERNAL_STORAGE] ?: false
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            isManagePermissionGranted = result[Manifest.permission.MANAGE_EXTERNAL_STORAGE] ?: false
+        }
+    }
+    fun checkPermissions() {
+        isReadPermissionGranted = ContextCompat.checkSelfPermission(
+            context, Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+
+        isWritePermissionGranted = ContextCompat.checkSelfPermission(
+            context, Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            isManagePermissionGranted = ContextCompat.checkSelfPermission(
+                context, Manifest.permission.MANAGE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            isManagePermissionGranted = true
+        }
+    }
+
+    fun requestPermissions() {
+        val permissionsToRequest = mutableListOf<String>()
+        if (!isReadPermissionGranted) {
+            permissionsToRequest.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+        if (!isWritePermissionGranted) {
+            permissionsToRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !isManagePermissionGranted) {
+            permissionsToRequest.add(Manifest.permission.MANAGE_EXTERNAL_STORAGE)
+        }
+        if (permissionsToRequest.isNotEmpty()) {
+            permissionResultLauncher.launch(permissionsToRequest.toTypedArray())
+        } else {
+            Toast.makeText(context, "All permissions already granted", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun checkAndRequestPermissions() {
+        checkPermissions()
+        if (!isReadPermissionGranted || !isWritePermissionGranted || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !isManagePermissionGranted)) {
+            requestPermissions()
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -544,7 +638,21 @@ fun CreatePrescriptionButton() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
-            onClick = {},
+            onClick = {
+                checkPermissions()
+
+                if (isReadPermissionGranted || isWritePermissionGranted) {
+                    val prescription = Prescription(
+                        symptoms = symptomsText,
+                        observation = observationText,
+                        diagnose = diagnosisText,
+                        medicines = medicines
+                    )
+                    createAndSharePdf(context, prescription, patient, viewModel)
+                } else {
+                    checkAndRequestPermissions()
+                }
+            },
             colors = ButtonDefaults.buttonColors(
                 appBlue, Color.White
             ),
@@ -746,7 +854,115 @@ fun speechToText(text: String, speechRecognizerLauncher: ActivityResultLauncher<
             RecognizerIntent.EXTRA_LANGUAGE_MODEL,
             RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
         )
+        putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en");
+        putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en");
+        putExtra(RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE, "en");
+
         putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak the $text")
     }
     speechRecognizerLauncher.launch(intent)
+}
+
+private fun createAndSharePdf(context: Context, prescription: Prescription, patient: Patient, viewModel: PrescriptionViewModel) {
+
+    val filePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        context.getExternalFilesDir(null)
+    } else {
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+    }
+
+
+    val file = File(filePath, "prescription.pdf")
+    val outputStream: OutputStream = FileOutputStream(file)
+    val writer = PdfWriter(outputStream)
+    val pdfDocument = com.itextpdf.kernel.pdf.PdfDocument(writer)
+    val document = Document(pdfDocument)
+
+    val fontSet = FontSet()
+    fontSet.addFont("res/font/noto_sans_devanagari.ttf")
+    document.fontProvider = FontProvider(fontSet)
+    document.setProperty(Property.FONT, arrayOf("NotoSans"))
+    pdfDocument.defaultPageSize = PageSize.A4
+    document.setMargins(0F, 0F, 0F, 0F)
+
+
+    val clinicInfo = Div()
+        .add(Paragraph("Clinic Name\nAddress: Clinic Address\nPhone: Clinic Phone")
+            .setFontSize(14f)
+            .setTextAlignment(TextAlignment.CENTER))
+        .setWidth(UnitValue.createPercentValue(100f))
+        .setBackgroundColor(DeviceCmyk.CYAN)
+    document.add(clinicInfo)
+
+    // Add patient details
+    val patientDetails = Paragraph(
+        "Patient Name: ${patient.name}\nAge: ${patient.age}\n Phone: ${patient.number}"
+    )
+        .setFontSize(12f)
+        .setMargin(20f)
+    document.add(patientDetails)
+
+    // Add symptoms
+    val symptoms = Paragraph("Symptoms: ${prescription.symptoms}")
+        .setFontSize(12f)
+        .setMargin(20f)
+    document.add(symptoms)
+
+    // Add diagnosis
+    val diagnosis = Paragraph("Diagnosis: ${prescription.diagnose}")
+        .setFontSize(12f)
+        .setMargin(20f)
+    document.add(diagnosis)
+
+    // Add observation
+    val observation = Paragraph("Observation: ${prescription.observation}")
+        .setFontSize(12f)
+        .setMargin(20f)
+    document.add(observation)
+
+    // Add table of medicines
+    val table = Table(UnitValue.createPercentArray(floatArrayOf(40f, 15f, 15f, 15f, 15f)))
+        .setWidth(UnitValue.createPercentValue(100f))
+        .setMargin(20f)
+    table.addCell(Paragraph("Medicine").setTextAlignment(TextAlignment.CENTER))
+    table.addCell(Paragraph("Days").setTextAlignment(TextAlignment.CENTER))
+    table.addCell(Paragraph("Morning").setTextAlignment(TextAlignment.CENTER))
+    table.addCell(Paragraph("Afternoon").setTextAlignment(TextAlignment.CENTER))
+    table.addCell(Paragraph("Night").setTextAlignment(TextAlignment.CENTER))
+    // Add more rows for medicines
+
+    for (medicine in prescription.medicines) {
+        table.addCell(Paragraph(medicine.medicineName).setTextAlignment(TextAlignment.CENTER))
+        table.addCell(Paragraph("${medicine.duration}").setTextAlignment(TextAlignment.CENTER))
+        table.addCell(Paragraph(medicine.morningDosage).setTextAlignment(TextAlignment.CENTER))
+        table.addCell(Paragraph(medicine.afternoonDosage).setTextAlignment(TextAlignment.CENTER))
+        table.addCell(Paragraph(medicine.nightDosage).setTextAlignment(TextAlignment.CENTER))
+    }
+
+    // Add more rows as needed
+    document.add(table)
+    document.close()
+    val presc = Prescription(
+        "doctorName",
+        prescription.symptoms,
+        prescription.observation,
+        prescription.diagnose,
+        prescription.medicines,
+        System.currentTimeMillis().toString(),
+        "doctorId",
+        patient.patientId
+    )
+    Log.d("PRIYANSHU", "createAndSharePdf: $presc ")
+    viewModel.addPrescription(presc)
+    sharePdf(context, file)
+}
+
+private fun sharePdf(context: Context, file: File) {
+    val uri = FileProvider.getUriForFile(context, "com.priyanshudev.medconnect.fileprovider", file)
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "application/pdf"
+        putExtra(Intent.EXTRA_STREAM, uri)
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+    context.startActivity(Intent.createChooser(intent, "Share PDF using"))
 }

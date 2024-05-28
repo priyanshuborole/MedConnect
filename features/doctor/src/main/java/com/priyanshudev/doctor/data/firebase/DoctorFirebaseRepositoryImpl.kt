@@ -29,4 +29,8 @@ class DoctorFirebaseRepositoryImpl  @Inject constructor(
     override suspend fun updateAppointmentStatus(appointmentId: String, status: String): Boolean {
         return firebaseDataSource.updateAppointmentStatus(appointmentId, status)
     }
+
+    override suspend fun addPrescription(prescription: Prescription): Boolean {
+        return firebaseDataSource.addPrescription(prescription)
+    }
 }

@@ -7,6 +7,7 @@ import com.priyanshudev.common.domain.model.Appointment
 import com.priyanshudev.common.domain.model.Doctor
 import com.priyanshudev.common.domain.model.Patient
 import com.priyanshudev.common.domain.model.Prescription
+import com.priyanshudev.common.util.AppointmentStatus
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -144,12 +145,16 @@ class PatientFirebaseDataSource @Inject constructor(
 
     suspend fun rescheduleAppointment(appointmentId: String, startDateTime: Long): Boolean {
         try {
+            val updates = mapOf(
+                "startDateTime" to startDateTime,
+                "status" to AppointmentStatus.PENDING.status
+            )
             val document = firestore.collection("appointments")
                 .whereEqualTo("id",appointmentId)
                 .get().await()
             firestore.collection("appointments")
                 .document(document.documents[0].id)
-                .update("startDateTime",startDateTime)
+                .update(updates)
                 .await()
 
             return true
