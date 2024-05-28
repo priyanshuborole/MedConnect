@@ -7,58 +7,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.doctor.DoctorLoginFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_header"
-        android:backgroundTint="#F3F5FF"
-        android:elevation="2dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <TextView
-            android:id="@+id/tvHello"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello Doctor"
-            android:textSize="16sp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="44dp"
-            android:textColor="@color/text_default"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Welcome!"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvHello"
-            app:layout_constraintBottom_toBottomOf="@id/clHeader"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <ImageView
         android:id="@+id/ivDoctorLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:src="@drawable/img_logo"
-        android:layout_marginTop="180dp"
-        app:layout_constraintTop_toBottomOf="@id/clHeader"
+        android:layout_marginTop="160dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
+
     <TextView
         android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login to your account"
+        android:text="Medconnect"
         android:layout_marginTop="16dp"
         android:textSize="20sp"
         android:fontFamily="@font/poppins_semibold"
@@ -68,77 +32,45 @@
         app:layout_constraintTop_toBottomOf="@id/ivDoctorLogin"/>
 
     <TextView
+        android:id="@+id/tvHello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello"
+        android:layout_marginTop="4dp"
+        android:textSize="14sp"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="@color/text_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLogin"/>
+
+    <TextView
         android:id="@+id/btnGoogleSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Continue With Google"
-        android:paddingVertical="16dp"
+        android:paddingVertical="12dp"
         android:paddingHorizontal="20dp"
         android:textColor="@color/black"
         android:elevation="4dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/poppins_medium"
         android:background="@drawable/bg_cardview"
         android:gravity="center_vertical"
         android:drawableStart="@drawable/ic_google_logo"
         android:drawablePadding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tvLogin"
+        app:layout_constraintTop_toBottomOf="@id/tvHello"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
 
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/tiEmail"-->
-<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginLeft="10dp"-->
-<!--        android:layout_marginTop="50dp"-->
-<!--        android:layout_marginRight="10dp"-->
-<!--        android:hint="Email"-->
-<!--        app:boxCornerRadiusTopStart="8dp"-->
-<!--        app:boxCornerRadiusTopEnd="8dp"-->
-<!--        app:boxCornerRadiusBottomStart="8dp"-->
-<!--        app:boxCornerRadiusBottomEnd="8dp"-->
-<!--        app:boxStrokeWidth="2dp"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/ivDoctorLogin">-->
-
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:id="@+id/etEmail"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="16sp"-->
-<!--            android:maxLines="1" />-->
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
-
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/tiPassWord"-->
-<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginLeft="10dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_marginRight="10dp"-->
-<!--        android:hint="Password"-->
-<!--        app:boxCornerRadiusTopStart="8dp"-->
-<!--        app:boxCornerRadiusTopEnd="8dp"-->
-<!--        app:boxCornerRadiusBottomStart="8dp"-->
-<!--        app:boxCornerRadiusBottomEnd="8dp"-->
-<!--        app:boxStrokeWidth="2dp"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/tiEmail">-->
-
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:id="@+id/etPassword"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="16sp"-->
-<!--            android:maxLines="1" />-->
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
-
-
-
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/img_illustration"
+        android:layout_margin="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnGoogleSignIn"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

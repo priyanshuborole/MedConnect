@@ -19,11 +19,9 @@ class LoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(layoutInflater, container, false)
         binding.tvManagePatients.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_doctorLoginFragment)
-            requireActivity().finish()
         }
         binding.tvExploreDoctors.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_patientLoginFragment)
-            requireActivity().finish()
         }
         return binding.root
     }
