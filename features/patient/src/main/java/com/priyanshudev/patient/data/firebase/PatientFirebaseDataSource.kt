@@ -7,6 +7,7 @@ import com.priyanshudev.common.domain.model.Appointment
 import com.priyanshudev.common.domain.model.Doctor
 import com.priyanshudev.common.domain.model.Patient
 import com.priyanshudev.common.domain.model.Prescription
+import com.priyanshudev.common.util.AppointmentStatus
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -66,12 +67,14 @@ class PatientFirebaseDataSource @Inject constructor(
     }
 
 
-    suspend fun bookAppointment(doctorId: String, startDateTime: Long): Boolean {
+    suspend fun bookAppointment(doctorId: String, doctorName: String, startDateTime: Long): Boolean {
 
         val endDateTime = startDateTime + 3_600_000
         val appointment = Appointment(
             id = "Appointment$startDateTime",
             doctorId = doctorId,
+            doctorName = doctorName,
+            patientName = "",
             patientId = firebaseAuth.currentUser?.uid ?: "nullId",
             startDateTime = startDateTime,
             endDateTime = endDateTime
@@ -123,5 +126,40 @@ class PatientFirebaseDataSource @Inject constructor(
             .get()
             .await()
         return appointments.toObjects(Appointment::class.java)
+    }
+
+    suspend fun cancelAppointment(appointmentId: String): Boolean {
+        try {
+            val document = firestore.collection("appointments")
+                .whereEqualTo("id",appointmentId)
+                .get().await()
+            firestore.collection("appointments")
+                .document(document.documents[0].id)
+                .delete()
+                .await()
+            return true
+        } catch (e: Exception) {
+            return false
+        }
+    }
+
+    suspend fun rescheduleAppointment(appointmentId: String, startDateTime: Long): Boolean {
+        try {
+            val updates = mapOf(
+                "startDateTime" to startDateTime,
+                "status" to AppointmentStatus.PENDING.status
+            )
+            val document = firestore.collection("appointments")
+                .whereEqualTo("id",appointmentId)
+                .get().await()
+            firestore.collection("appointments")
+                .document(document.documents[0].id)
+                .update(updates)
+                .await()
+
+            return true
+        } catch (e: Exception) {
+            return false
+        }
     }
 }

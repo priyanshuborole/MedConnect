@@ -1,8 +1,7 @@
-package com.priyanshudev.patient.presentation.appointment
+package com.priyanshudev.doctor.presentation.appointment
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -39,19 +38,17 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.priyanshudev.common.domain.model.Appointment
 import com.priyanshudev.common.util.AppointmentStatus
-import com.priyanshudev.patient.R
-import com.priyanshudev.patient.presentation.appointment.component.DateTimePickerDialog
-import com.priyanshudev.patient.presentation.main.viewmodel.AppointmentViewModel
-import com.priyanshudev.patient.theme.strokeColor
+import com.priyanshudev.doctor.R
+import com.priyanshudev.doctor.theme.strokeColor
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 
 @Composable
-fun PatientAppointmentScreen(
-    viewModel: AppointmentViewModel = hiltViewModel()
-) {
+fun DoctorAppointmentScreen(
+    viewModel: DoctorAppointmentViewModel = hiltViewModel()
+){
     val appointments by viewModel.appointments.collectAsState()
     val groupedAppointments = groupAppointmentsByTime(appointments)
     Column(
@@ -90,9 +87,9 @@ fun PatientAppointmentScreen(
     }
 }
 
+
 @Composable
-fun AppointmentCardUpcoming(viewModel: AppointmentViewModel,appointment: Appointment) {
-    var showDateTimeDialog by remember { mutableStateOf(false) }
+fun AppointmentCardUpcoming(viewModel: DoctorAppointmentViewModel,appointment: Appointment) {
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -114,7 +111,7 @@ fun AppointmentCardUpcoming(viewModel: AppointmentViewModel,appointment: Appoint
             Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text(
-                    text = appointment.doctorName,
+                    text = appointment.patientName,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Black
                 )
@@ -140,38 +137,29 @@ fun AppointmentCardUpcoming(viewModel: AppointmentViewModel,appointment: Appoint
                     fontWeight = FontWeight.SemiBold
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    OutlinedButton(
-                        border = BorderStroke(1.dp, strokeColor),
-                        shape = MaterialTheme.shapes.small,
-                        onClick = {
-                            viewModel.cancelAppointment(appointment.id)
-                        }) {
-                        Text(text = "Cancel")
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Button(
-                        shape = MaterialTheme.shapes.small,
-                        onClick = {
-                            showDateTimeDialog = true
-                        }) {
-                        Text(text = "Reschedule")
-                    }
-
-                    if (showDateTimeDialog) {
-                        DateTimePickerDialog(
-                            onDismissRequest = { showDateTimeDialog = false },
-                            onSave = { timestamp ->
-                                Log.d("PRIYANSHU", "DoctorProfile: TIMESTAMP $timestamp")
-                                showDateTimeDialog = false
-                                viewModel.rescheduleAppointment(appointment.id, timestamp)
-                            }
-                        )
+                if (appointment.status == AppointmentStatus.PENDING.status) {
+                    Row(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        OutlinedButton(
+                            border = BorderStroke(1.dp, strokeColor),
+                            shape = MaterialTheme.shapes.small,
+                            onClick = {
+                                viewModel.updateAppointmentStatus(appointment.id, AppointmentStatus.CANCELLED.status)
+                            }) {
+                            Text(text = "Cancel")
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Button(
+                            shape = MaterialTheme.shapes.small,
+                            onClick = {
+                                viewModel.updateAppointmentStatus(appointment.id, AppointmentStatus.CONFIRMED.status)
+                            }) {
+                            Text(text = "Accept")
+                        }
                     }
                 }
             }

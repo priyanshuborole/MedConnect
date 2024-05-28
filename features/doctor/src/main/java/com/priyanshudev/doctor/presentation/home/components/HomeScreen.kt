@@ -1,8 +1,10 @@
 package com.priyanshudev.doctor.presentation.home.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.priyanshudev.common.domain.model.Patient
+import com.priyanshudev.doctor.R
 import com.priyanshudev.doctor.presentation.home.DoctorViewModel
 import com.priyanshudev.doctor.theme.headerColor
 import com.priyanshudev.doctor.theme.textDefault
@@ -45,7 +49,8 @@ import com.priyanshudev.doctor.theme.textDefault
 @Composable
 fun HomeScreen(
     viewModel: DoctorViewModel = hiltViewModel(),
-    onItemClick:(Patient) -> Unit
+    onItemClick:(Patient) -> Unit,
+    onScanClick: () -> Unit
 ) {
     val searchText by viewModel.searchText.collectAsState()
     val doctors by viewModel.patient.collectAsState()
@@ -55,19 +60,22 @@ fun HomeScreen(
             .navigationBarsPadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Header()
+        Header(onScanClick)
         SearchTextView(
             searchText,
             viewModel::onSearchTextChange
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "Your Patients", modifier = Modifier.wrapContentSize().align(Alignment.Start).padding(start = 16.dp), fontSize = 16.sp, color = textDefault)
+        Text(text = "Your Patients", modifier = Modifier
+            .wrapContentSize()
+            .align(Alignment.Start)
+            .padding(start = 16.dp), fontSize = 16.sp, color = textDefault)
         PatientsList(doctors,onItemClick)
     }
 }
 
 @Composable
-fun Header(){
+fun Header(onClick: () -> Unit){
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(0,0,15,15),
@@ -75,25 +83,37 @@ fun Header(){
             containerColor = headerColor
         )
     ) {
-        Column(
+
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(15.dp),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.SpaceAround
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ){
+            Column {
+                Text(
+                    modifier = Modifier.padding(0.dp, 15.dp, 0.dp, 0.dp),
+                    text = "Hello,",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 15.dp),
+                    text = "Vibhuti Patil",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Icon(
+                painter = painterResource(id = R.drawable.ic_qr_code_scanner),
+                contentDescription = "",
+                modifier = Modifier
+                    .padding(15.dp)
+                    .clickable {
+                        onClick()
+                    }
+            )
 
-            Text(
-                modifier = Modifier.padding(0.dp, 15.dp, 0.dp, 0.dp),
-                text = "Hello,",
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Text(
-                modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 15.dp),
-                text = "Vibhuti Patil",
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold
-            )
         }
     }
 }
@@ -170,5 +190,5 @@ fun PatientsList(patients: List<Patient>, onItemClick:(Patient) -> Unit){
 @Composable
 @Preview(showSystemUi = true)
 fun PreviewHomeScreen(){
-    Header()
+//    Header()
 }

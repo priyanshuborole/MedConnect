@@ -74,5 +74,17 @@ dependencies {
     implementation(HiltDependencies.hiltAndroid)
     kapt(HiltDependencies.hiltAndroidCompiler)
 
+    //itext
+    implementation("com.itextpdf:itext7-core:7.1.8")
+
+    // CameraX
+    implementation("androidx.camera:camera-camera2:1.0.2")
+    implementation("androidx.camera:camera-lifecycle:1.0.2")
+    implementation("androidx.camera:camera-view:1.0.0-alpha31")
+
+    // Zxing
+    implementation("com.google.zxing:core:3.3.3")
+    implementation("com.journeyapps:zxing-android-embedded:4.1.0")
+
     implementation(project(Modules.common))
 }

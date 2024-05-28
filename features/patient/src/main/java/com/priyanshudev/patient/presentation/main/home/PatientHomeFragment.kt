@@ -30,7 +30,9 @@ class PatientHomeFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 MaterialTheme {
-                    HomeScreen(viewModel){
+                    HomeScreen(
+                        viewModel
+                    ){
                         Log.d("PRIYANSHU","doctor passed is $it")
                         val action = PatientHomeFragmentDirections.actionPatientHomeFragmentToDoctorDetailFragment(it)
                         findNavController().navigate(action)

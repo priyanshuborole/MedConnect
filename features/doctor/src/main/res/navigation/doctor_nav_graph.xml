@@ -13,10 +13,13 @@
         <action
             android:id="@+id/action_doctorDashboardFragment_to_patientDetailsFragment"
             app:destination="@id/patientDetailsFragment" />
+        <action
+            android:id="@+id/action_doctorDashboardFragment_to_scanQrFragment"
+            app:destination="@id/scanQrFragment" />
     </fragment>
     <fragment
         android:id="@+id/doctorAppointmentFragment"
-        android:name="com.priyanshudev.doctor.presentation.DoctorAppointmentFragment"
+        android:name="com.priyanshudev.doctor.presentation.appointment.DoctorAppointmentFragment"
         android:label="fragment_doctor_appointment"
         tools:layout="@layout/fragment_doctor_appointment" />
     <fragment
@@ -35,5 +38,14 @@
         android:id="@+id/addPrescriptionFragment"
         android:name="com.priyanshudev.doctor.presentation.prescription.AddPrescriptionFragment"
         android:label="fragment_add_prescription"
-        tools:layout="@layout/fragment_add_prescription" />
+        tools:layout="@layout/fragment_add_prescription" >
+        <argument
+            android:name="patient"
+            app:argType="com.priyanshudev.common.domain.model.Patient" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanQrFragment"
+        android:name="com.priyanshudev.doctor.presentation.scanner.ScanQrFragment"
+        android:label="fragment_scan_qr"
+        tools:layout="@layout/fragment_scan_qr" />
 </navigation>
