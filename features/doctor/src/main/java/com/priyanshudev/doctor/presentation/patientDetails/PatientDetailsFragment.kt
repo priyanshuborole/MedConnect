@@ -1,7 +1,9 @@
 package com.priyanshudev.doctor.presentation.patientDetails
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +36,7 @@ class PatientDetailsFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 MaterialTheme {
-                    PatientDetailsScreen(args.patient, viewModel) {
+                    PatientDetailsScreen(args.patient, viewModel, this@PatientDetailsFragment) {
                         val action = PatientDetailsFragmentDirections.actionPatientDetailsFragmentToAddPrescriptionFragment()
                         findNavController().navigate(action)
                     }
@@ -45,8 +47,15 @@ class PatientDetailsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    fun openWhatsAppChat(context: Context, phoneNumber: String) {
+        val uri = Uri.parse("https://wa.me/$phoneNumber")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        context.startActivity(intent)
+    }
 
+    fun makeCall(context: Context, phoneNumber: String) {
+        val uri = Uri.parse("tel:$phoneNumber")
+        val intent = Intent(Intent.ACTION_DIAL, uri)
+        context.startActivity(intent)
     }
 }

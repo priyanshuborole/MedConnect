@@ -67,7 +67,7 @@
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/img_illustration"
+        android:src="@drawable/img_illustration_doctor"
         android:layout_margin="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

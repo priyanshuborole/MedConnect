@@ -1,9 +1,9 @@
 package com.priyanshudev.doctor.presentation.patientDetails.components
 
-import android.widget.Button
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,7 +34,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -47,6 +45,7 @@ import com.priyanshudev.common.domain.model.Patient
 import com.priyanshudev.common.domain.model.Prescription
 import com.priyanshudev.doctor.R
 import com.priyanshudev.doctor.presentation.home.DoctorViewModel
+import com.priyanshudev.doctor.presentation.patientDetails.PatientDetailsFragment
 import com.priyanshudev.doctor.theme.appBlue
 import com.priyanshudev.doctor.theme.headerColor
 import com.priyanshudev.doctor.theme.strokeColor
@@ -54,7 +53,7 @@ import com.priyanshudev.doctor.theme.textDefault
 
 @Composable
 fun PatientDetailsScreen(
-    patient: Patient, viewModel: DoctorViewModel = hiltViewModel(),
+    patient: Patient, viewModel: DoctorViewModel = hiltViewModel(), fragment: PatientDetailsFragment,
     onItemClick: () -> Unit
 ) {
     Column(
@@ -78,7 +77,7 @@ fun PatientDetailsScreen(
             )
             PrescriptionList(viewModel, onItemClick)
         }
-        BottomNavButtons(onItemClick)
+        BottomNavButtons(onItemClick, fragment, patient)
     }
 }
 
@@ -230,11 +229,7 @@ fun PrescriptionListItem(prescription: Prescription, onItemClick: () -> Unit) {
 }
 
 @Composable
-fun BottomNavButtons(onItemClick: () -> Unit){
-//    Box(
-//        modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp),
-//        contentAlignment = Alignment.BottomCenter
-//    ) {
+fun BottomNavButtons(onItemClick: () -> Unit, fragment: PatientDetailsFragment, patient: Patient){
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -243,15 +238,19 @@ fun BottomNavButtons(onItemClick: () -> Unit){
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Bottom
     ) {
-        Box(modifier = Modifier.wrapContentSize().padding(horizontal = 10.dp)) {
+        Box(
+            modifier = Modifier
+                .weight(0.5f)
+                .padding(end = 10.dp)
+                .align(Alignment.CenterVertically)
+        ) {
             Button(
                 onClick = { onItemClick() },
                 modifier = Modifier
                     .height(60.dp)
-                    .wrapContentWidth()
-                    .padding(start = 16.dp), shape = RoundedCornerShape(15.dp),
+                    .fillMaxWidth(), shape = RoundedCornerShape(15.dp),
                 colors = ButtonDefaults.buttonColors(
-                    appBlue, Color.White // Set the background color here
+                    appBlue, Color.White
                 )
             ) {
                 Image(
@@ -259,18 +258,27 @@ fun BottomNavButtons(onItemClick: () -> Unit){
                     contentDescription = "add prescription button",
                     modifier = Modifier.size(20.dp)
                 )
-
-                Text(text = "Add Prescription", style = MaterialTheme.typography.bodySmall)
+                Spacer(modifier = Modifier.width(2.dp))
+                Text(
+                    text = "Add Prescription",
+                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
         }
-        Box(modifier = Modifier.wrapContentSize().padding(horizontal = 10.dp)) {
+        Box(
+            modifier = Modifier
+                .weight(0.35f)
+                .padding(end = 10.dp)
+                .align(Alignment.CenterVertically)
+        ) {
             Button(
-                onClick = {},
+                onClick = { fragment.makeCall(fragment.requireContext(), patient.number) },
                 modifier = Modifier
                     .height(60.dp)
-                    .wrapContentWidth(), shape = RoundedCornerShape(15.dp),
+                    .fillMaxWidth(), shape = RoundedCornerShape(15.dp),
                 colors = ButtonDefaults.buttonColors(
-                    appBlue, Color.White // Set the background color here
+                    appBlue, Color.White
                 )
             ) {
                 Image(
@@ -278,20 +286,30 @@ fun BottomNavButtons(onItemClick: () -> Unit){
                     contentDescription = "Call button",
                     modifier = Modifier.size(20.dp)
                 )
-
-                Text(text = "Call", style = MaterialTheme.typography.bodySmall)
+                Spacer(modifier = Modifier.width(2.dp))
+                Text(
+                    text = "Call",
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontSize = 16.sp,
+                    modifier = Modifier.padding(horizontal = 4.dp)
+                )
             }
         }
-//        Button(onClick = {}, modifier = Modifier.size(60.dp).wrapContentWidth()) {
         Image(
             painterResource(id = R.drawable.ic_whatsapp),
             contentDescription = "whatsapp button",
-            modifier = Modifier.size(60.dp)
+            modifier = Modifier
+                .size(60.dp)
+                .clickable {
+                    fragment.openWhatsAppChat(
+                        context = fragment.requireContext(),
+                        phoneNumber = patient.number
+                    )
+                }
+                .weight(0.15f)
         )
-//        }
-//    }
     }
-    }
+}
 
 
 @Composable
