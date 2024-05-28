@@ -78,5 +78,7 @@ dependencies {
     implementation(AndroidxDependencies.Compose.viewModel)
     implementation(AndroidxDependencies.Compose.hiltNavigation)
 
+    // Zxing
+    implementation("com.google.zxing:core:3.3.3")
     implementation(project(Modules.common))
 }

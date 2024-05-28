@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_doctorDashboardFragment_to_patientDetailsFragment"
             app:destination="@id/patientDetailsFragment" />
+        <action
+            android:id="@+id/action_doctorDashboardFragment_to_scanQrFragment"
+            app:destination="@id/scanQrFragment" />
     </fragment>
     <fragment
         android:id="@+id/doctorAppointmentFragment"
@@ -40,4 +43,9 @@
             android:name="patient"
             app:argType="com.priyanshudev.common.domain.model.Patient" />
     </fragment>
+    <fragment
+        android:id="@+id/scanQrFragment"
+        android:name="com.priyanshudev.doctor.presentation.scanner.ScanQrFragment"
+        android:label="fragment_scan_qr"
+        tools:layout="@layout/fragment_scan_qr" />
 </navigation>

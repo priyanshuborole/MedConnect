@@ -34,10 +34,12 @@ class DoctorDashboardFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 MaterialTheme {
-                    HomeScreen(viewModel){
+                    HomeScreen(viewModel,{
                         Log.d("VIBHUTI","patient passed is $it")
                         val action = DoctorDashboardFragmentDirections.actionDoctorDashboardFragmentToPatientDetailsFragment(it)
                         findNavController().navigate(action)
+                    }){
+                        findNavController().navigate(R.id.action_doctorDashboardFragment_to_scanQrFragment)
                     }
                 }
             }
