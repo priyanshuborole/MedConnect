@@ -1,6 +1,6 @@
 object Versions {
     const val moshi_version = "1.14.0"
-    const val kotlin = "1.5.21"
+    const val kotlin = "1.8.22"
     const val navigation_safe_args_version = "2.6.0"
     const val hilt_version = "2.46.1"
     const val core_ktx_version = "1.10.1"
@@ -18,6 +18,14 @@ object Versions {
 
     object Lifecycle {
         const val runtime_version = "2.3.1"
+    }
+
+    object Compose {
+        const val hiltNavigationCompose = "1.0.0-alpha03"
+        const val viewModel = "2.6.1"
+        const val bom_version = "2023.09.01"
+        const val compose_navigation = "2.7.3"
+        const val coil = "2.5.0"
     }
 }
 
@@ -73,6 +81,24 @@ object AndroidxDependencies {
         const val runtime =
             "androidx.lifecycle:lifecycle-runtime:${Versions.Lifecycle.runtime_version}"
     }
+    object Compose {
+        const val hiltNavigation =
+            "androidx.hilt:hilt-navigation-compose:${Versions.Compose.hiltNavigationCompose}"
+        const val viewModel =
+            "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Compose.viewModel}"
+        const val bom = "androidx.compose:compose-bom:${Versions.Compose.bom_version}"
+        const val ui = "androidx.compose.ui:ui"
+        const val graphics = "androidx.compose.ui:ui-graphics"
+        const val toolingPreview = "androidx.compose.ui:ui-tooling-preview"
+        const val material = "androidx.compose.material3:material3"
+        const val navigation =
+            "androidx.navigation:navigation-compose:${Versions.Compose.compose_navigation}"
+
+        //Integration with activities
+        const val activity = "androidx.activity:activity-compose"
+
+        const val coil = "io.coil-kt:coil-compose:${Versions.Compose.coil}"
+    }
 }
 
 object KotlinDependencies {
@@ -99,7 +125,7 @@ object SquareUpDependencies {
         "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi_version}"
 }
 
-object FirebaseDependencies{
+object FirebaseDependencies {
     const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
     const val firebaseAuth = "com.google.firebase:firebase-auth-ktx"
     const val firestore = "com.google.firebase:firebase-firestore-ktx"
